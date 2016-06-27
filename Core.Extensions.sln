@@ -12,6 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Extensions", "src\Core.Extensions\Core.Extensions.xproj", "{E4611C8A-158F-4B06-B791-BB3226798262}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{707C5992-8B2A-46CE-B81D-D73553FCEE85}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Diagnostics", "src\Core.Diagnostics\Core.Diagnostics.xproj", "{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Diagnostics.Tests", "tests\Core.Diagnostics.Tests\Core.Diagnostics.Tests.xproj", "{C793D8E7-9D67-4371-A437-6B20788B1354}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +28,21 @@ Global
 		{E4611C8A-158F-4B06-B791-BB3226798262}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4611C8A-158F-4B06-B791-BB3226798262}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4611C8A-158F-4B06-B791-BB3226798262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C793D8E7-9D67-4371-A437-6B20788B1354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C793D8E7-9D67-4371-A437-6B20788B1354}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C793D8E7-9D67-4371-A437-6B20788B1354}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C793D8E7-9D67-4371-A437-6B20788B1354}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E4611C8A-158F-4B06-B791-BB3226798262} = {4BB1A738-4645-4A72-9830-9A8F1FF1B0C0}
+		{3B43A8AC-1A37-43CF-ABB9-39D273D1066C} = {4BB1A738-4645-4A72-9830-9A8F1FF1B0C0}
+		{C793D8E7-9D67-4371-A437-6B20788B1354} = {707C5992-8B2A-46CE-B81D-D73553FCEE85}
 	EndGlobalSection
 EndGlobal
