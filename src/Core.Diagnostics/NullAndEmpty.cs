@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Core.Diagnostics.Resources;
 
 namespace Core.Diagnostics
 {
@@ -81,7 +82,7 @@ namespace Core.Diagnostics
             }
             if (!value.Any())
             {
-                throw new ArgumentException("Non-empty collection required.", paramName);
+                throw new ArgumentException(Strings.NonEmptyCollection, paramName);
             }
         }
 
@@ -110,7 +111,7 @@ namespace Core.Diagnostics
             }
             if (value.Length == 0)
             {
-                throw new ArgumentException("Non-empty string required.", paramName);
+                throw new ArgumentException(Strings.NonEmptyString, paramName);
             }
         }
 
@@ -143,7 +144,7 @@ namespace Core.Diagnostics
 
             if (value.Any(item => item == null))
             {
-                throw new ArgumentException("Requires non-null items in collection.", paramName);
+                throw new ArgumentException(Strings.NonNullItems, paramName);
             }
         }
     }
