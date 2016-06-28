@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "Core.Diagnostics": "*",
+    "Core.Linq": "*",
     "Core.Resources": "*"
   },
   "frameworks": {

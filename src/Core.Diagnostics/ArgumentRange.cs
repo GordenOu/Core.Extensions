@@ -5,6 +5,10 @@ using Core.Diagnostics.Resources;
 
 namespace Core.Diagnostics
 {
+    /// <summary>
+    /// Provides methods to perform assertion on the range of the parameter.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [EditorBrowsable(EditorBrowsableState.Advanced)]
     public struct ArgumentRange<T>
         where T : IComparable<T>
@@ -117,14 +121,14 @@ namespace Core.Diagnostics
     public static partial class Requires
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Diagnostic.ArgumentRange{T}"/> stuct
+        /// Initializes a new instance of the <see cref="ArgumentRange{T}(T, string)"/> stuct
         /// which can be used to perform assertion on the range of the parameter.
         /// </summary>
         /// <typeparam name="T">The type of the parameter.</typeparam>
         /// <param name="value">The value of the parameter.</param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <returns>
-        /// An <see cref="Diagnostic.ArgumentRange{T}"/> struct for the given parameter.
+        /// An <see cref="ArgumentRange{T}(T, string)"/> struct for the given parameter.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="value"/> is null.

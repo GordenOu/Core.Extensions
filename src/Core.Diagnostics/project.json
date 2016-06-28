@@ -1,7 +1,8 @@
 ﻿{
   "version": "0.1.0-*",
   "buildOptions": {
-    "allowUnsafe": true
+    "allowUnsafe": true,
+    "xmlDoc": true
   },
   "dependencies": {
     "Core.Resources": "0.1.0.*"

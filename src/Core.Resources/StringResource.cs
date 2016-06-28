@@ -13,6 +13,9 @@ namespace Core.Resources
     {
         private static ResourceManager resourceManager = new ResourceManager(typeof(T));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringResource{T}"/> class.
+        /// </summary>
         protected StringResource() { }
 
         /// <summary>
