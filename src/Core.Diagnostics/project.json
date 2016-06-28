@@ -1,11 +1,11 @@
 ﻿{
-  "version": "0.1.0-*",
+  "version": "0.2.0-*",
   "buildOptions": {
     "allowUnsafe": true,
     "xmlDoc": true
   },
   "dependencies": {
-    "Core.Resources": "0.1.0.*"
+    "Core.Resources": "0.2.0.*"
   },
   "frameworks": {
     "netstandard1.6": {

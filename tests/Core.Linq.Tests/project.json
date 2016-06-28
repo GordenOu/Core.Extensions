@@ -5,8 +5,7 @@
   },
   "dependencies": {
     "Core.Linq": "*",
-    "dotnet-test-mstest": "1.0.1-preview",
-    "MSTest.TestFramework": "1.0.0-preview"
+    "Core.Tests": "*"
   },
   "frameworks": {
     "netcoreapp1.0": {

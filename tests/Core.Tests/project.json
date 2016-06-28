@@ -1,11 +1,7 @@
 ﻿{
-  "testRunner": "mstest",
-  "buildOptions": {
-    "allowUnsafe": true
-  },
   "dependencies": {
-    "Core.Diagnostics": "*",
-    "Core.Tests": "*"
+    "dotnet-test-mstest": "1.0.1-preview",
+    "MSTest.TestFramework": "1.0.0-preview"
   },
   "frameworks": {
     "netcoreapp1.0": {
