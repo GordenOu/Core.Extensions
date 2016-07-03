@@ -1,8 +1,5 @@
 ﻿{
   "testRunner": "mstest",
-  "buildOptions": {
-    "allowUnsafe": true
-  },
   "dependencies": {
     "Core.Resources": "*",
     "Core.Tests": "*"

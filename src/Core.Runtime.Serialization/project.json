@@ -1,11 +1,11 @@
 ﻿{
   "version": "0.3.0-*",
   "buildOptions": {
-    "allowUnsafe": true,
     "xmlDoc": true
   },
   "dependencies": {
-    "Core.Resources": "0.3.0.*"
+    "Core.Diagnostics": "0.3.0",
+    "System.Runtime.Serialization.Xml": "4.1.1"
   },
   "frameworks": {
     "netstandard1.6": {

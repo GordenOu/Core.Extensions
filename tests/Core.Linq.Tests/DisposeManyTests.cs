@@ -21,17 +21,17 @@ namespace Core.Linq.Tests
     }
 
     [TestClass]
-    public class DisposeTests
+    public class DisposeManyTests
     {
         [TestMethod]
         public void Dispose()
         {
             int count = 0;
             var disposables = Range(0, 10).Select(i => new Disposable(() => count += 3));
-            disposables.Dispose();
+            disposables.DisposeMany();
             Assert.AreEqual(30, count);
             disposables = null;
-            Assert.ThrowsException<ArgumentNullException>(() => disposables.Dispose());
+            Assert.ThrowsException<ArgumentNullException>(() => disposables.DisposeMany());
         }
     }
 }

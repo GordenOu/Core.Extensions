@@ -46,7 +46,29 @@ namespace Core.Diagnostics
         /// <paramref name="value"/> is null.
         /// </exception>
         [DebuggerStepThrough]
+        [Obsolete]
         public static unsafe void NotNull(void* value, string paramName)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(paramName);
+            }
+        }
+
+        /// <summary>
+        /// Throws <see cref="ArgumentNullException"/> if the pointer parameter is null.
+        /// </summary>
+        /// <param name="value">
+        /// The value of the pointer parameter.
+        /// </param>
+        /// <param name="paramName">
+        /// The name of the pointer parameter.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="value"/> is null.
+        /// </exception>
+        [DebuggerStepThrough]
+        public static unsafe void NotNullPtr(void* value, string paramName)
         {
             if (value == null)
             {
@@ -78,7 +100,7 @@ namespace Core.Diagnostics
         {
             if (value == null)
             {
-                throw new ArgumentNullException(paramName);
+                throw new ArgumentNullException(paramName, Strings.NonEmptyCollection);
             }
             if (!value.Any())
             {
@@ -107,7 +129,7 @@ namespace Core.Diagnostics
         {
             if (value == null)
             {
-                throw new ArgumentNullException(paramName);
+                throw new ArgumentNullException(paramName, Strings.NonEmptyString);
             }
             if (value.Length == 0)
             {

@@ -1,4 +1,5 @@
 ﻿{
+  "testRunner": "mstest",
   "dependencies": {
     "dotnet-test-mstest": "1.0.1-preview",
     "MSTest.TestFramework": "1.0.0-preview"

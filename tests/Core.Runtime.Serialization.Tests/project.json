@@ -1,7 +1,7 @@
 ﻿{
   "testRunner": "mstest",
   "dependencies": {
-    "Core.Linq": "*",
+    "Core.Runtime.Serialization": "*",
     "Core.Tests": "*"
   },
   "frameworks": {

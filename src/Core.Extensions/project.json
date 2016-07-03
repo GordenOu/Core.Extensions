@@ -7,7 +7,9 @@
   "dependencies": {
     "Core.Diagnostics": "*",
     "Core.Linq": "*",
-    "Core.Resources": "*"
+    "Core.Resources": "*",
+    "Core.Runtime.Serialization": "*",
+    "Core.Net": "*"
   },
   "frameworks": {
     "netcoreapp1.0": {

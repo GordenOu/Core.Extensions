@@ -13,7 +13,25 @@ namespace Core.Linq
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source"/> is null.
         /// </exception>
+        [Obsolete]
         public static void Dispose(this IEnumerable<IDisposable> source)
+        {
+            Requires.NotNull(source, nameof(source));
+
+            foreach (var item in source)
+            {
+                item?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Dispose all elements in the source collection.
+        /// </summary>
+        /// <param name="source">The source collection.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source"/> is null.
+        /// </exception>
+        public static void DisposeMany(this IEnumerable<IDisposable> source)
         {
             Requires.NotNull(source, nameof(source));
 

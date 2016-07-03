@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>2898b8b5-4a31-4633-a935-04bbe75b350d</ProjectGuid>
-    <RootNamespace>Core.Tests</RootNamespace>
+    <ProjectGuid>b3115e69-1786-4df9-ac53-452a67c45925</ProjectGuid>
+    <RootNamespace>Core.Runtime.Serialization.Tests</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

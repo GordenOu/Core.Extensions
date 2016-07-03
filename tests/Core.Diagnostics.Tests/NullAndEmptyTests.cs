@@ -10,7 +10,7 @@ namespace Core.Diagnostics.Tests
         public unsafe void NotNull()
         {
             Requires.NotNull(new object(), string.Empty);
-            Requires.NotNull(new IntPtr(1).ToPointer(), string.Empty);
+            Requires.NotNullPtr(new IntPtr(1).ToPointer(), string.Empty);
 
             string paramName;
 
@@ -19,7 +19,7 @@ namespace Core.Diagnostics.Tests
             Assert.AreEqual("object", paramName);
 
             paramName = Assert.ThrowsException<ArgumentNullException>(
-                () => Requires.NotNull((void*)null, "pointer")).ParamName;
+                () => Requires.NotNullPtr((void*)null, "pointer")).ParamName;
             Assert.AreEqual("pointer", paramName);
         }
 
