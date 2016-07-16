@@ -1,10 +1,11 @@
 ﻿{
-  "version": "0.3.0-*",
   "buildOptions": {
     "xmlDoc": true
   },
   "dependencies": {
-    "Core.Diagnostics": "0.3.0",
+    "Core.Diagnostics": {
+      "target": "project"
+    },
     "System.Runtime.Serialization.Xml": "4.1.1"
   },
   "frameworks": {

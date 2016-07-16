@@ -8,7 +8,7 @@ using Core.Diagnostics;
 namespace Core.Net.Http
 {
     /// <summary>
-    /// Provides extension methods for <see cref="HttpClient"/>
+    /// Provides extension methods for <see cref="HttpClient"/>.
     /// </summary>
     public static class HttpClientExtensions
     {

@@ -5,11 +5,21 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Core.Diagnostics": "*",
-    "Core.Linq": "*",
-    "Core.Resources": "*",
-    "Core.Runtime.Serialization": "*",
-    "Core.Net": "*"
+    "Core.Diagnostics": {
+      "target": "project"
+    },
+    "Core.Linq": {
+      "target": "project"
+    },
+    "Core.Resources": {
+      "target": "project"
+    },
+    "Core.Runtime.Serialization": {
+      "target": "project"
+    },
+    "Core.Net": {
+      "target": "project"
+    }
   },
   "frameworks": {
     "netcoreapp1.0": {

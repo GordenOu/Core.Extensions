@@ -1,10 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
+using Core.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Runtime.Serialization.Tests
@@ -26,8 +27,59 @@ namespace Core.Runtime.Serialization.Tests
     [TestClass]
     public class AnyTypeResolverTests
     {
+        private string Serialize<T>(T obj)
+        {
+            var serializer = new DataContractSerializer(
+                typeof(T),
+                new DataContractSerializerSettings()
+                {
+                    DataContractResolver = new AnyTypeResolver(),
+                    SerializeReadOnlyTypes = true
+                });
+            var output = new StringBuilder();
+            using (var writer = XmlWriter.Create(output))
+            {
+                serializer.WriteObject(writer, obj);
+                writer.Flush();
+            }
+            return output.ToString();
+        }
+
+        private T Deserialize<T>(string xml)
+        {
+            var serializer = new DataContractSerializer(
+                typeof(T),
+                new DataContractSerializerSettings()
+                {
+                    DataContractResolver = new AnyTypeResolver(),
+                    SerializeReadOnlyTypes = true
+                });
+            using (var reader = XmlReader.Create(new StringReader(xml)))
+            {
+                return (T)serializer.ReadObject(reader);
+            }
+        }
+
         [TestMethod]
-        public void Serialization()
+        public void SerializeBasicTypes()
+        {
+            int a = 3;
+            string xml = Serialize<object>(a);
+            int b = Deserialize<int>(xml);
+            Assert.AreEqual(a, b);
+
+            var list = new List<int> { 1, 2, 3 };
+            xml = Serialize(list);
+            var array = Deserialize<int[]>(xml);
+            CollectionAssert.AreEqual(list, array);
+
+            xml = Serialize<IList<int>>(list);
+            var newList = Deserialize<List<int>>(xml);
+            CollectionAssert.AreEqual(list, newList);
+        }
+
+        [TestMethod]
+        public void SerializeComplexTypes()
         {
             Class1<int> obj1 = new Class2<int>
             {
@@ -57,30 +109,51 @@ namespace Core.Runtime.Serialization.Tests
                 }.ToList().AsReadOnly()
             };
 
-            var serializer = new DataContractSerializer(
-                typeof(object),
-                new DataContractSerializerSettings()
-                {
-                    DataContractResolver = new AnyTypeResolver(
-                        new[] { typeof(Class1<int>).GetTypeInfo().Assembly }),
-                    SerializeReadOnlyTypes = true
-                });
-            var output = new StringBuilder();
-            using (var writer = XmlWriter.Create(output))
-            {
-                serializer.WriteObject(writer, obj1);
-                writer.Flush();
-            }
-
-            string xml = output.ToString();
-            Class2<int> obj2;
-            using (var reader = XmlReader.Create(new StringReader(xml)))
-            {
-                obj2 = serializer.ReadObject(reader) as Class2<int>;
-            }
+            string xml = Serialize<object>(obj1);
+            var obj2 = Deserialize<Class2<int>>(xml);
 
             Assert.IsNotNull(obj2);
             CollectionAssert.AreEqual(((Class2<int>)obj2.Value).Value.List, new[] { 1, 2, 3 });
+            CollectionAssert.AreEqual(obj2.Value.List, new[] { 1, 3, 2 });
+            CollectionAssert.AreEqual(obj2.List, new[] { 3, 2, 1 });
+        }
+
+        [TestMethod]
+        public void SerializeClassesInDifferentAssemblies()
+        {
+            Class3<int> obj1 = new Class4<int>
+            {
+                Value = new Class4<int>
+                {
+                    Value = new Class3<int>
+                    {
+                        List = new[]
+                        {
+                            1,
+                            2,
+                            3
+                        }.ToList().AsReadOnly()
+                    },
+                    List = new[]
+                    {
+                        1,
+                        3,
+                        2
+                    }.ToList().AsReadOnly()
+                },
+                List = new[]
+                {
+                    3,
+                    2,
+                    1
+                }.ToList().AsReadOnly()
+            };
+
+            string xml = Serialize(obj1);
+            var obj2 = Deserialize<Class4<int>>(xml);
+
+            Assert.IsNotNull(obj2);
+            CollectionAssert.AreEqual(((Class4<int>)obj2.Value).Value.List, new[] { 1, 2, 3 });
             CollectionAssert.AreEqual(obj2.Value.List, new[] { 1, 3, 2 });
             CollectionAssert.AreEqual(obj2.List, new[] { 3, 2, 1 });
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -8,12 +8,16 @@ using System.Xml;
 namespace Core.Runtime.Serialization
 {
     /// <summary>
-    /// Tries to resolve any type mapping by finding types in the given assemblies.
+    /// Tries to resolve any type mapping using type names and assembly names.
     /// </summary>
     public class AnyTypeResolver : DataContractResolver
     {
-        private Assembly[] assemblies;
         private Type cachedType;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnyTypeResolver"/> class.
+        /// </summary>
+        public AnyTypeResolver() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnyTypeResolver"/> class.
@@ -21,12 +25,9 @@ namespace Core.Runtime.Serialization
         /// <param name="assemblies">
         /// The assemblies used to find types.
         /// </param>
-        public AnyTypeResolver(IEnumerable<Assembly> assemblies = null)
-        {
-            this.assemblies = assemblies == null
-                ? Array.Empty<Assembly>()
-                : assemblies.Where(assembly => assembly != null).ToArray();
-        }
+        [Obsolete]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AnyTypeResolver(IEnumerable<Assembly> assemblies = null) { }
 
         /// <summary>
         /// Resolve any type so that the full type name maps to the XML type name and the assembly
@@ -54,7 +55,7 @@ namespace Core.Runtime.Serialization
             else
             {
                 string fullName = type.FullName;
-                string assemblyName = type.GetTypeInfo().Assembly.GetName().Name;
+                string assemblyName = type.GetTypeInfo().Assembly.GetName().FullName;
                 var dictionary = new XmlDictionary();
                 typeName = dictionary.Add(XmlConvert.EncodeName(fullName));
                 typeNamespace = dictionary.Add(XmlConvert.EncodeName(assemblyName));
@@ -79,33 +80,15 @@ namespace Core.Runtime.Serialization
         {
             typeName = typeName ?? string.Empty;
             typeNamespace = typeNamespace ?? string.Empty;
-
             typeName = XmlConvert.DecodeName(typeName);
-            string prefix = "http://schemas.datacontract.org/2004/07/";
-            if (typeNamespace.StartsWith(prefix))   // Should be a bug.
-            {
-                typeNamespace = typeNamespace.Substring(prefix.Length);
-            }
             typeNamespace = XmlConvert.DecodeName(typeNamespace);
 
-            var type = Type.GetType(typeName);
-            if (type == null && assemblies.Length > 0)
-            {
-                foreach (var assembly in assemblies)
-                {
-                    type = assembly.GetType(typeName)
-                        ?? assembly.GetType(string.Join(",", typeName, typeNamespace));
+            var type = Type.GetType(string.Join(",", typeName, typeNamespace));
 
-                    if (type != null)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            if (type == null)
+            // Bug
+            if (type == null && typeNamespace.StartsWith("http://"))
             {
-                type = cachedType;  // Ultimate solution to the bug.
+                type = type ?? cachedType;
                 cachedType = null;
             }
 

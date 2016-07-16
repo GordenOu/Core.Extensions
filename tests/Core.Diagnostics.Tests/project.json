@@ -4,8 +4,12 @@
     "allowUnsafe": true
   },
   "dependencies": {
-    "Core.Diagnostics": "*",
-    "Core.Tests": "*"
+    "Core.Diagnostics": {
+      "target": "project"
+    },
+    "Core.Tests": {
+      "target": "project"
+    }
   },
   "frameworks": {
     "netcoreapp1.0": {

@@ -1,8 +1,12 @@
 ﻿{
   "testRunner": "mstest",
   "dependencies": {
-    "Core.Net": "*",
-    "Core.Tests": "*"
+    "Core.Net": {
+      "target": "project"
+    },
+    "Core.Tests": {
+      "target": "project"
+    }
   },
   "frameworks": {
     "netcoreapp1.0": {
