@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Core.Tests
 {
     [TestClass]
-    internal class AssertAsyncTests
+    public class AssertAsyncTests
     {
         [TestMethod]
         public void NoException()
