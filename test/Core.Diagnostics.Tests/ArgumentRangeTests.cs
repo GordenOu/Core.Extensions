@@ -7,45 +7,20 @@ namespace Core.Diagnostics.Tests
     public class ArgumentRangeTests
     {
         [TestMethod]
-        public void ArgumentRangeNoException()
+        public void RangeNoException()
         {
-            Requires.ArgumentRange(1, string.Empty)
-                .GreaterThan(0)
-                .NoGreaterThan(1)
-                .LessThan(2)
-                .NoLessThan(1);
-            Requires.ArgumentRange(20, string.Empty)
-                .GreaterThan(10)
-                .NoGreaterThan(21)
-                .LessThan(30)
-                .NoLessThan(19);
+            Requires.Range(1, string.Empty, true);
+            Requires.Range<string>(null, string.Empty, true);
         }
 
         [TestMethod]
         public void ArgumenRangeThrowsException()
         {
-            Assert.ThrowsException<ArgumentNullException>(
-                () => Requires.ArgumentRange<string>(null, string.Empty));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => Requires.Range<string>(null, string.Empty, false));
 
             Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => Requires.ArgumentRange(2.5, string.Empty).GreaterThan(2.5));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-               () => Requires.ArgumentRange(3, string.Empty).GreaterThan(4));
-
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => Requires.ArgumentRange(2.5, string.Empty).NoGreaterThan(2.4));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-               () => Requires.ArgumentRange(3, string.Empty).NoGreaterThan(2));
-
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => Requires.ArgumentRange(2.5, string.Empty).LessThan(2.5));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-               () => Requires.ArgumentRange(4, string.Empty).LessThan(3));
-
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-               () => Requires.ArgumentRange(2.5, string.Empty).NoLessThan(2.6));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(
-               () => Requires.ArgumentRange(3, string.Empty).NoLessThan(4));
+                () => Requires.Range(2.5, string.Empty, false));
         }
 
         [TestMethod]

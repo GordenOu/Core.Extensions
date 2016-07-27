@@ -1,12 +1,9 @@
 ﻿{
-  "testRunner": "mstest",
+  "testRunner": "xunit",
   "dependencies": {
-    "Core.Runtime.Serialization": {
-      "target": "project"
-    },
-    "Core.Tests": {
-      "target": "project"
-    }
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "MSTest.TestFramework": "1.0.1-preview",
+    "xunit": "2.2.0-beta2-build3300"
   },
   "frameworks": {
     "netcoreapp1.0": {
@@ -16,7 +13,7 @@
           "version": "1.0.0"
         }
       },
-      "imports": [ "dnxcore50", "portable-net45+win8" ]
+      "imports": "dnxcore50"
     }
   }
 }

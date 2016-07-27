@@ -10,6 +10,7 @@ namespace Core.Diagnostics
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [EditorBrowsable(EditorBrowsableState.Advanced)]
+    [Obsolete]
     public struct ArgumentRange<T>
         where T : IComparable<T>
     {
@@ -133,6 +134,7 @@ namespace Core.Diagnostics
         /// <exception cref="ArgumentNullException">
         /// <paramref name="value"/> is null.
         /// </exception>
+        [Obsolete]
         public static ArgumentRange<T> ArgumentRange<T>(T value, string paramName)
             where T : IComparable<T>
         {
@@ -142,6 +144,29 @@ namespace Core.Diagnostics
             }
 
             return new ArgumentRange<T>(value, paramName);
+        }
+
+        /// <summary>
+        /// Throws <see cref="ArgumentOutOfRangeException"/> if the <paramref name="condition"/>
+        /// is false.
+        /// </summary>
+        /// <typeparam name="T">The type of the parameter.</typeparam>
+        /// <param name="value">The value of the parameter.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <param name="condition">
+        /// True if <paramref name="value"/> is in required range.
+        /// </param>
+        /// <param name="message">The custom error message.</param>
+        public static void Range<T>(
+            T value,
+            string paramName,
+            bool condition,
+            string message = null)
+        {
+            if (!condition)
+            {
+                throw new ArgumentOutOfRangeException(paramName, value, message);
+            }
         }
 
         private static void Positive<T>(T value, string paramName)

@@ -1,7 +1,7 @@
 ﻿{
-  "testRunner": "mstest",
+  "testRunner": "xunit",
   "dependencies": {
-    "Core.Resources": {
+    "Core.Runtime.Serialization": {
       "target": "project"
     },
     "Core.Tests": {
@@ -16,7 +16,7 @@
           "version": "1.0.0"
         }
       },
-      "imports": [ "dnxcore50", "portable-net45+win8" ]
+      "imports": "dnxcore50"
     }
   }
 }

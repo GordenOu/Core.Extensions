@@ -1,10 +1,7 @@
 ﻿{
-  "testRunner": "mstest",
-  "buildOptions": {
-    "allowUnsafe": true
-  },
+  "testRunner": "xunit",
   "dependencies": {
-    "Core.Diagnostics": {
+    "Core.Resources": {
       "target": "project"
     },
     "Core.Tests": {
@@ -19,7 +16,7 @@
           "version": "1.0.0"
         }
       },
-      "imports": [ "dnxcore50", "portable-net45+win8" ]
+      "imports": "dnxcore50"
     }
   }
 }

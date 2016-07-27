@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -18,16 +16,6 @@ namespace Core.Runtime.Serialization
         /// Initializes a new instance of the <see cref="AnyTypeResolver"/> class.
         /// </summary>
         public AnyTypeResolver() { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyTypeResolver"/> class.
-        /// </summary>
-        /// <param name="assemblies">
-        /// The assemblies used to find types.
-        /// </param>
-        [Obsolete]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public AnyTypeResolver(IEnumerable<Assembly> assemblies = null) { }
 
         /// <summary>
         /// Resolve any type so that the full type name maps to the XML type name and the assembly
