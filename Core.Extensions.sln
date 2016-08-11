@@ -3,44 +3,44 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4BB1A738-4645-4A72-9830-9A8F1FF1B0C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{4BB1A738-4645-4A72-9830-9A8F1FF1B0C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5DFE0E90-003B-46EB-9457-B075D3841D6F}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Extensions", "src\Core.Extensions\Core.Extensions.xproj", "{E4611C8A-158F-4B06-B791-BB3226798262}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Extensions", "Source\Core.Extensions\Core.Extensions.xproj", "{E4611C8A-158F-4B06-B791-BB3226798262}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{707C5992-8B2A-46CE-B81D-D73553FCEE85}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{707C5992-8B2A-46CE-B81D-D73553FCEE85}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Diagnostics", "src\Core.Diagnostics\Core.Diagnostics.xproj", "{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Diagnostics", "Source\Core.Diagnostics\Core.Diagnostics.xproj", "{3B43A8AC-1A37-43CF-ABB9-39D273D1066C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Diagnostics.Tests", "test\Core.Diagnostics.Tests\Core.Diagnostics.Tests.xproj", "{C793D8E7-9D67-4371-A437-6B20788B1354}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Diagnostics.Tests", "Test\Core.Diagnostics.Tests\Core.Diagnostics.Tests.xproj", "{C793D8E7-9D67-4371-A437-6B20788B1354}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Resources", "src\Core.Resources\Core.Resources.xproj", "{F3588B98-55BA-4022-A755-873D5C6B5AE9}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Resources", "Source\Core.Resources\Core.Resources.xproj", "{F3588B98-55BA-4022-A755-873D5C6B5AE9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Resources.Tests", "test\Core.Resources.Tests\Core.Resources.Tests.xproj", "{1FDBFC8B-1FB0-4280-824C-A60A8B0033FF}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Resources.Tests", "Test\Core.Resources.Tests\Core.Resources.Tests.xproj", "{1FDBFC8B-1FB0-4280-824C-A60A8B0033FF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Linq", "src\Core.Linq\Core.Linq.xproj", "{F47EF5D5-2BF8-49B6-A213-44E59CCC28CF}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Linq", "Source\Core.Linq\Core.Linq.xproj", "{F47EF5D5-2BF8-49B6-A213-44E59CCC28CF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Linq.Tests", "test\Core.Linq.Tests\Core.Linq.Tests.xproj", "{CCAD0655-8E02-4B43-B1C7-27BB64D05428}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Linq.Tests", "Test\Core.Linq.Tests\Core.Linq.Tests.xproj", "{CCAD0655-8E02-4B43-B1C7-27BB64D05428}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Tests", "test\Core.Tests\Core.Tests.xproj", "{2898B8B5-4A31-4633-A935-04BBE75B350D}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Tests", "Test\Core.Tests\Core.Tests.xproj", "{2898B8B5-4A31-4633-A935-04BBE75B350D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Net", "src\Core.Net\Core.Net.xproj", "{F0F2A0FA-4663-44AB-8BD6-F5E48B847CE9}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Net", "Source\Core.Net\Core.Net.xproj", "{F0F2A0FA-4663-44AB-8BD6-F5E48B847CE9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Runtime.Serialization", "src\Core.Runtime.Serialization\Core.Runtime.Serialization.xproj", "{7966A7EE-9018-4CE5-80F6-CC94B206AEB2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Runtime.Serialization", "Source\Core.Runtime.Serialization\Core.Runtime.Serialization.xproj", "{7966A7EE-9018-4CE5-80F6-CC94B206AEB2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Net.Tests", "test\Core.Net.Tests\Core.Net.Tests.xproj", "{9C8D9CBA-A190-4463-9080-875DDDC5A213}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Net.Tests", "Test\Core.Net.Tests\Core.Net.Tests.xproj", "{9C8D9CBA-A190-4463-9080-875DDDC5A213}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Runtime.Serialization.Tests", "test\Core.Runtime.Serialization.Tests\Core.Runtime.Serialization.Tests.xproj", "{B3115E69-1786-4DF9-AC53-452A67C45925}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Runtime.Serialization.Tests", "Test\Core.Runtime.Serialization.Tests\Core.Runtime.Serialization.Tests.xproj", "{B3115E69-1786-4DF9-AC53-452A67C45925}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Extensions.Test", "test\Core.Extensions.Test\Core.Extensions.Test.xproj", "{5324DC06-E7F0-45EF-ABA4-30966AF4E42F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Extensions.Test", "Test\Core.Extensions.Test\Core.Extensions.Test.xproj", "{5324DC06-E7F0-45EF-ABA4-30966AF4E42F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Reflection", "src\Core.Reflection\Core.Reflection.xproj", "{5B6AC7C3-7095-489A-8F13-C03D1FB5CABD}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Reflection", "Source\Core.Reflection\Core.Reflection.xproj", "{5B6AC7C3-7095-489A-8F13-C03D1FB5CABD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Reflection.Tests", "test\Core.Reflection.Tests\Core.Reflection.Tests.xproj", "{CE8279C5-AF8F-40F0-8628-D28A914D42E5}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core.Reflection.Tests", "Test\Core.Reflection.Tests\Core.Reflection.Tests.xproj", "{CE8279C5-AF8F-40F0-8628-D28A914D42E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
