@@ -76,7 +76,7 @@ namespace Core.Runtime.Serialization
             // Bug
             if (type == null && typeNamespace.StartsWith("http://"))
             {
-                type = type ?? cachedType;
+                type = cachedType;
                 cachedType = null;
             }
 
