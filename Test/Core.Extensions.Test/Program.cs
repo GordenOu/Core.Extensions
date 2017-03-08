@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.DotNet.Cli.Utils;
 
@@ -14,15 +15,16 @@ namespace Core.Extensions
 
         public static void Main(string[] args)
         {
-            var testProjectDirectories = new FileInfo(GetFilePath())
+            var testProjectFiles = new FileInfo(GetFilePath())
                 .Directory
                 .Parent
-                .EnumerateDirectories("Core*Tests", SearchOption.TopDirectoryOnly);
+                .EnumerateDirectories("Core.*.Tests", SearchOption.TopDirectoryOnly)
+                .SelectMany(directory => directory.EnumerateFiles("*.csproj"));
             bool passed = true;
-            foreach (var directory in testProjectDirectories)
+            foreach (var file in testProjectFiles)
             {
                 Console.WriteLine();
-                Command.CreateDotNet("test", new[] { directory.FullName })
+                Command.CreateDotNet("test", new[] { file.FullName })
                     .OnErrorLine(line => passed = false)
                     .Execute();
             }

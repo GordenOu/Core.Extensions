@@ -31,8 +31,7 @@ namespace Core.Linq
         {
             Requires.NotNull(dictionary, nameof(dictionary));
 
-            TValue temp;
-            if (dictionary.TryGetValue(key, out temp))
+            if (dictionary.TryGetValue(key, out var temp))
             {
                 return temp;
             }
@@ -69,8 +68,7 @@ namespace Core.Linq
             Requires.NotNull(dictionary, nameof(dictionary));
             Requires.NotNull(valueFactory, nameof(valueFactory));
 
-            TValue value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out var value))
             {
                 return value;
             }
@@ -112,8 +110,7 @@ namespace Core.Linq
             Requires.NotNull(dictionary, nameof(dictionary));
             Requires.NotNull(updateValueFactory, nameof(updateValueFactory));
 
-            TValue value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out var value))
             {
                 value = updateValueFactory(key, value);
                 dictionary[key] = value;
@@ -158,8 +155,7 @@ namespace Core.Linq
             Requires.NotNull(addValueFactory, nameof(addValueFactory));
             Requires.NotNull(updateValueFactory, nameof(updateValueFactory));
 
-            TValue value;
-            if (dictionary.TryGetValue(key, out value))
+            if (dictionary.TryGetValue(key, out var value))
             {
                 value = updateValueFactory(key, value);
                 dictionary[key] = value;

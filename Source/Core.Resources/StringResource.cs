@@ -25,7 +25,7 @@ namespace Core.Resources
         /// <returns>The string resource.</returns>
         public static string GetString(string name)
         {
-            if (name == null)
+            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>OU Qihao</Authors>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>Core.Extensions</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Core.Extensions</PackageId>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Diagnostics\Core.Diagnostics.csproj" />
+    <ProjectReference Include="..\Core.Linq\Core.Linq.csproj" />
+    <ProjectReference Include="..\Core.Resources\Core.Resources.csproj" />
+    <ProjectReference Include="..\Core.Runtime.Serialization\Core.Runtime.Serialization.csproj" />
+    <ProjectReference Include="..\Core.Net\Core.Net.csproj" />
+  </ItemGroup>
+
+</Project>

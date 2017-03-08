@@ -66,9 +66,7 @@ namespace Core.Linq
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 int j = random.Next(i + 1);
-                var temp = list[j];
-                list[j] = list[i];
-                list[i] = temp;
+                (list[i], list[j]) = (list[j], list[i]);
             }
         }
     }

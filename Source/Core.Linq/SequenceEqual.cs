@@ -26,7 +26,7 @@ namespace Core.Linq
 
         public static IEqualityComparer<T> Create(EqualityComparison<T> equalityComparison)
         {
-            return equalityComparison == null
+            return equalityComparison is null
                 ? Default
                 : new EqualityComparer<T>(equalityComparison);
         }
