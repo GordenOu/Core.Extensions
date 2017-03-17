@@ -3,7 +3,6 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Net.Http.Tests
@@ -39,43 +38,43 @@ namespace Core.Net.Http.Tests
             string requestUri = "http://dot.net";
             string tempFileName = Path.GetTempFileName();
 
-            await AsyncAssert.ThrowsException<ArgumentNullException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
             {
                 await client.GetFileAsync(requestUri, tempFileName);
             });
-            await AsyncAssert.ThrowsException<ArgumentNullException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
             {
                 await client.GetFileAsync(new Uri(requestUri), tempFileName);
             });
 
             client = new HttpClient(handler);
-            await AsyncAssert.ThrowsException<ArgumentNullException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
             {
                 await client.GetFileAsync((string)null, tempFileName);
             });
-            await AsyncAssert.ThrowsException<ArgumentNullException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
             {
                 await client.GetFileAsync((Uri)null, tempFileName);
             });
 
-            await AsyncAssert.ThrowsException<ArgumentException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentException>(async () =>
             {
                 await client.GetFileAsync(string.Empty, tempFileName);
             });
 
-            await AsyncAssert.ThrowsException<ArgumentNullException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
             {
                 await client.GetFileAsync(requestUri, null);
             });
-            await AsyncAssert.ThrowsException<ArgumentNullException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () =>
             {
                 await client.GetFileAsync(new Uri(requestUri), null);
             });
-            await AsyncAssert.ThrowsException<ArgumentException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentException>(async () =>
             {
                 await client.GetFileAsync(requestUri, string.Empty);
             });
-            await AsyncAssert.ThrowsException<ArgumentException>(async () =>
+            await Assert.ThrowsExceptionAsync<ArgumentException>(async () =>
             {
                 await client.GetFileAsync(new Uri(requestUri), string.Empty);
             });
