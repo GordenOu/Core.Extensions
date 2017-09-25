@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Core.Extensions": {
-      "commandName": "Project",
-      "commandLineArgs": "$(SolutionDir)"
-    }
-  }
-}
