@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Resources;
 
 namespace Core.Resources
@@ -11,7 +12,7 @@ namespace Core.Resources
     public abstract class StringResource<T>
         where T : StringResource<T>
     {
-        private static ResourceManager resourceManager = new ResourceManager(typeof(T));
+        private static readonly ResourceManager resourceManager = new ResourceManager(typeof(T));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringResource{T}"/> class.
@@ -22,15 +23,44 @@ namespace Core.Resources
         /// Gets the localized string resource of the given name.
         /// </summary>
         /// <param name="name">The name of the string resource.</param>
-        /// <returns>The string resource.</returns>
+        /// <returns>The string resource, or null if the resource is not found.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="name"/> is null.
+        /// </exception>
         public static string GetString(string name)
         {
-            if (name is null)
+            if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
             return resourceManager.GetString(name);
+        }
+
+        /// <summary>
+        /// Gets the localized string resource of the given name and culture.
+        /// </summary>
+        /// <param name="name">The name of the string resource.</param>
+        /// <param name="culture">The culture of the string resource.</param>
+        /// <returns>The string resource, or null if the resource is not found.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="name"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="culture"/> is null.
+        /// </exception>
+        public static string GetString(string name, CultureInfo culture)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (culture == null)
+            {
+                throw new ArgumentNullException(nameof(culture));
+            }
+
+            return resourceManager.GetString(name, culture);
         }
     }
 }

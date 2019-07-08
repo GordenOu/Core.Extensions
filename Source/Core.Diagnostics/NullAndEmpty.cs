@@ -27,7 +27,7 @@ namespace Core.Diagnostics
         public static void NotNull<T>(T value, string paramName)
             where T : class
         {
-            if (value is null)
+            if (value == null)
             {
                 throw new ArgumentNullException(paramName);
             }
@@ -76,7 +76,7 @@ namespace Core.Diagnostics
         [DebuggerStepThrough]
         public static void NotNullOrEmpty<T>(IEnumerable<T> value, string paramName)
         {
-            if (value is null)
+            if (value == null)
             {
                 throw new ArgumentNullException(paramName, Strings.NonEmptyCollection);
             }
@@ -105,7 +105,7 @@ namespace Core.Diagnostics
         [DebuggerStepThrough]
         public static void NotNullOrEmpty(string value, string paramName)
         {
-            if (value is null)
+            if (value == null)
             {
                 throw new ArgumentNullException(paramName, Strings.NonEmptyString);
             }
@@ -137,12 +137,12 @@ namespace Core.Diagnostics
         public static void NotNullItems<T>(IEnumerable<T> value, string paramName)
             where T : class
         {
-            if (value is null)
+            if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            if (value.Any(item => item is null))
+            if (value.Any(item => item == null))
             {
                 throw new ArgumentException(Strings.NonNullItems, paramName);
             }

@@ -34,7 +34,7 @@ namespace Core.Runtime.Serialization
             out XmlDictionaryString typeName,
             out XmlDictionaryString typeNamespace)
         {
-            if (type is null || declaredType is null)
+            if (type == null || declaredType == null)
             {
                 typeName = null;
                 typeNamespace = null;
@@ -74,7 +74,7 @@ namespace Core.Runtime.Serialization
             var type = Type.GetType(string.Join(",", typeName, typeNamespace));
 
             // Bug
-            if (type is null && typeNamespace.StartsWith("http://"))
+            if (type == null && typeNamespace.StartsWith("http://"))
             {
                 type = cachedType;
                 cachedType = null;

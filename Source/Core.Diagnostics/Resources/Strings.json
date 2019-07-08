@@ -1,0 +1,9 @@
+﻿{
+  "NonEmptyCollection": "Non-empty collection required.",
+  "NonEmptyString": "Non-empty string required.",
+  "NonNullItems": "Requires non-null items in collection.",
+  "Positive": "Positive argument required.",
+  "NonPositive": "Non-positive argument required.",
+  "Negative": "Negative argument required.",
+  "NonNegative": "Non-negative argument required."
+}

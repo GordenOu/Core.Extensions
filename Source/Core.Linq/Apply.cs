@@ -70,7 +70,6 @@ namespace Core.Linq
             foreach (var item in source)
             {
                 action(item, count);
-
                 count++;
             }
         }

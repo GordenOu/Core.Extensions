@@ -36,7 +36,7 @@ namespace Core.Diagnostics
         private static void Positive<T>(T value, string paramName)
             where T : IComparable<T>
         {
-            if (value.CompareTo(default(T)) <= 0)
+            if (value.CompareTo(default) <= 0)
             {
                 throw new ArgumentOutOfRangeException(paramName, value, Strings.Positive);
             }
@@ -45,7 +45,7 @@ namespace Core.Diagnostics
         private static void NonPositive<T>(T value, string paramName)
             where T : IComparable<T>
         {
-            if (value.CompareTo(default(T)) > 0)
+            if (value.CompareTo(default) > 0)
             {
                 throw new ArgumentOutOfRangeException(paramName, value, Strings.NonPositive);
             }
@@ -54,7 +54,7 @@ namespace Core.Diagnostics
         private static void Negative<T>(T value, string paramName)
            where T : IComparable<T>
         {
-            if (value.CompareTo(default(T)) >= 0)
+            if (value.CompareTo(default) >= 0)
             {
                 throw new ArgumentOutOfRangeException(paramName, value, Strings.Negative);
             }
@@ -63,7 +63,7 @@ namespace Core.Diagnostics
         private static void NonNegative<T>(T value, string paramName)
           where T : IComparable<T>
         {
-            if (value.CompareTo(default(T)) < 0)
+            if (value.CompareTo(default) < 0)
             {
                 throw new ArgumentOutOfRangeException(paramName, value, Strings.NonNegative);
             }

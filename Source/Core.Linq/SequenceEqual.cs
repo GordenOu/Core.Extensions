@@ -15,7 +15,7 @@ namespace Core.Linq
 {
     internal class EqualityComparer<T> : System.Collections.Generic.EqualityComparer<T>
     {
-        private EqualityComparison<T> equalityComparison;
+        private readonly EqualityComparison<T> equalityComparison;
 
         private EqualityComparer(EqualityComparison<T> equalityComparison)
         {
@@ -72,7 +72,7 @@ namespace Core.Linq
         /// <typeparam name="T">The element type of the sequences.</typeparam>
         /// <param name="first">The first sequence.</param>
         /// <param name="second">The second sequence.</param>
-        /// <param name="euqlityComparison">
+        /// <param name="equalityComparison">
         /// The function used to compare elements for equality.
         /// </param>
         /// <returns>True if the two sequences have equal length and elements.</returns>
@@ -82,7 +82,7 @@ namespace Core.Linq
         public static bool SequenceEqual<T>(
             this IEnumerable<T> first,
             IEnumerable<T> second,
-            EqualityComparison<T> euqlityComparison)
+            EqualityComparison<T> equalityComparison)
         {
             Requires.NotNull(first, nameof(first));
             Requires.NotNull(second, nameof(second));
@@ -90,7 +90,7 @@ namespace Core.Linq
             return System.Linq.Enumerable.SequenceEqual(
                 first,
                 second,
-                EqualityComparer<T>.Create(euqlityComparison));
+                EqualityComparer<T>.Create(equalityComparison));
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Core.Resources;
+﻿using Core.Resources.Json;
 
 namespace Core.Diagnostics.Resources
 {
-    internal class Strings : StringResource<Strings>
+    internal class Strings : JsonResource<Strings>
     {
         public static string NonEmptyCollection => GetString(nameof(NonEmptyCollection));
 

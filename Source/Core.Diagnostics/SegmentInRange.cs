@@ -71,7 +71,7 @@ namespace Core.Diagnostics
         [DebuggerStepThrough]
         public static void SegmentInRange<T>(ICollection<T> source, int offset, int count)
         {
-            if (source is null)
+            if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
             }

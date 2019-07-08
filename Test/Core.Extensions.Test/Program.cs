@@ -6,14 +6,14 @@ using Microsoft.DotNet.Cli.Utils;
 
 namespace Core.Extensions
 {
-    public class Program
+    class Program
     {
         private static string GetFilePath([CallerFilePath] string filePath = null)
         {
             return filePath;
         }
 
-        public static void Main(string[] args)
+        static void Main()
         {
             var testProjectFiles = new FileInfo(GetFilePath())
                 .Directory

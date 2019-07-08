@@ -26,15 +26,15 @@ namespace Core.Linq.Tests
         {
             int[] first = null;
             int[] second = null;
-            EqualityComparison<int> euqlityComparison = (x, y) => x == y;
+            bool equalityComparison(int x, int y) => x == y;
             Assert.ThrowsException<ArgumentNullException>(
-                () => first.SequenceEqual(new[] { 1, 2, 3 }, euqlityComparison));
+                () => first.SequenceEqual(new[] { 1, 2, 3 }, equalityComparison));
             first = new[] { 1, 2, 3 };
             Assert.ThrowsException<ArgumentNullException>(
-                () => first.SequenceEqual(second, euqlityComparison));
+                () => first.SequenceEqual(second, equalityComparison));
 
             Assert.IsTrue(first.SequenceEqual(new[] { 1, 2, 3 }, null));
-            Assert.IsTrue(first.SequenceEqual(new[] { 1, 2, 3 }, euqlityComparison));
+            Assert.IsTrue(first.SequenceEqual(new[] { 1, 2, 3 }, equalityComparison));
             Assert.IsFalse(first.SequenceEqual(new[] { 4, 5, 6 }, null));
             Assert.IsTrue(first.SequenceEqual(new[] { 4, 5, 6 }, (x, y) => x + 3 == y));
         }

@@ -28,7 +28,7 @@ namespace Core.Linq.Tests
 
         private T GenericTestAction<T>(int value)
         {
-            return default(T);
+            return default;
         }
 
         [TestMethod]
