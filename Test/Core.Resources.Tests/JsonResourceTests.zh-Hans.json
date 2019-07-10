@@ -1,0 +1,12 @@
+{
+    "Test": "测试",
+    "bool": true,
+    "object": {
+        "name": "value"
+    },
+    "array": [
+        "test1",
+        "test2",
+        "test3"
+    ]
+}

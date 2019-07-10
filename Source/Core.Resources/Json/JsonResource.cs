@@ -81,7 +81,7 @@ namespace Core.Resources.Json
                 throw new ArgumentNullException(nameof(culture));
             }
 
-            var value = resourceManager.GetObject(name);
+            var value = resourceManager.GetObject(name, culture);
             if (value != null)
             {
                 var element = (JsonElement)value;
