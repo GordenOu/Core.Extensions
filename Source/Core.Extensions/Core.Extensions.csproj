@@ -15,15 +15,15 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Core.Diagnostics\Core.Diagnostics.csproj" />
-    <ProjectReference Include="..\Core.Linq\Core.Linq.csproj" />
-    <ProjectReference Include="..\Core.Reflection\Core.Reflection.csproj" />
-    <ProjectReference Include="..\Core.Resources\Core.Resources.csproj" />
-    <ProjectReference Include="..\Core.Runtime.Serialization\Core.Runtime.Serialization.csproj" />
+    <ProjectReference Include="../Core.Diagnostics/Core.Diagnostics.csproj" />
+    <ProjectReference Include="../Core.Linq/Core.Linq.csproj" />
+    <ProjectReference Include="../Core.Reflection/Core.Reflection.csproj" />
+    <ProjectReference Include="../Core.Resources/Core.Resources.csproj" />
+    <ProjectReference Include="../Core.Runtime.Serialization/Core.Runtime.Serialization.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Core.Extensions.Analyzers\Core.Extensions.Analyzers.csproj">
+    <ProjectReference Include="../Core.Extensions.Analyzers/Core.Extensions.Analyzers.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Analyzer</OutputItemType>
     </ProjectReference>

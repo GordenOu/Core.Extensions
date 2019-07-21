@@ -7,11 +7,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Core.Resources\Core.Resources.csproj" />
+    <ProjectReference Include="../Core.Resources/Core.Resources.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="Resources\**\*.json" />
+    <EmbeddedResource Include="Resources/**/*.json" />
   </ItemGroup>
   
 </Project>

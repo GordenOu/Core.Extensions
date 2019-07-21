@@ -18,8 +18,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Core.Linq\Core.Linq.csproj" />
-    <ProjectReference Include="..\Core.Tests\Core.Tests.csproj" />
+    <ProjectReference Include="../../Source/Core.Linq/Core.Linq.csproj" />
+    <ProjectReference Include="../Core.Tests/Core.Tests.csproj" />
   </ItemGroup>
   
 </Project>

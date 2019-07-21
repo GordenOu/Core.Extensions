@@ -18,8 +18,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Core.Runtime.Serialization\Core.Runtime.Serialization.csproj" />
-    <ProjectReference Include="..\Core.Tests\Core.Tests.csproj" />
+    <ProjectReference Include="../../Source/Core.Runtime.Serialization/Core.Runtime.Serialization.csproj" />
+    <ProjectReference Include="../Core.Tests/Core.Tests.csproj" />
   </ItemGroup>
   
 </Project>

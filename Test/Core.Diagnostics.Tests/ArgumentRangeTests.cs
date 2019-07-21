@@ -14,7 +14,7 @@ namespace Core.Diagnostics.Tests
         }
 
         [TestMethod]
-        public void ArgumenRangeThrowsException()
+        public void ArgumentRangeThrowsException()
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(
                 () => Requires.Range<string>(null, string.Empty, false));

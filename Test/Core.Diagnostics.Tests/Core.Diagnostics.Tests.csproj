@@ -19,8 +19,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Core.Diagnostics\Core.Diagnostics.csproj" />
-    <ProjectReference Include="..\Core.Tests\Core.Tests.csproj" />
+    <ProjectReference Include="../../Source/Core.Diagnostics/Core.Diagnostics.csproj" />
+    <ProjectReference Include="../Core.Tests/Core.Tests.csproj" />
   </ItemGroup>
   
 </Project>
