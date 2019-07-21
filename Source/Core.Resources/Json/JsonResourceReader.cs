@@ -52,7 +52,7 @@ namespace Core.Resources.Json
 
         public JsonResourceReader(Stream stream)
         {
-            if (stream == null)
+            if (stream is null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }

@@ -31,7 +31,7 @@ namespace Core.Resources.Json
         /// </exception>
         public static string GetString(string name)
         {
-            if (name == null)
+            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
@@ -72,11 +72,11 @@ namespace Core.Resources.Json
         /// </exception>
         public static string GetString(string name, CultureInfo culture)
         {
-            if (name == null)
+            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (culture == null)
+            if (culture is null)
             {
                 throw new ArgumentNullException(nameof(culture));
             }
@@ -110,7 +110,7 @@ namespace Core.Resources.Json
         /// </exception>
         public static JsonElement? GetJsonElement(string name)
         {
-            if (name == null)
+            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
@@ -140,7 +140,7 @@ namespace Core.Resources.Json
         /// </exception>
         public static JsonElement? GetJsonElement(string name, CultureInfo culture)
         {
-            if (name == null)
+            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
