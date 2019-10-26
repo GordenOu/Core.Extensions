@@ -48,7 +48,7 @@ namespace Core.Diagnostics
         [DebuggerStepThrough]
         public static unsafe void NotNullPtr(void* value, string paramName)
         {
-            if (value is null)
+            if (value == null)
             {
                 throw new ArgumentNullException(paramName);
             }

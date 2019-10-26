@@ -2,9 +2,9 @@
 
 namespace Core.Extensions
 {
-    public class Program
+    class Program
     {
-        public static void Main()
+        static void Main()
         {
             Console.WriteLine("Yo~");
         }
