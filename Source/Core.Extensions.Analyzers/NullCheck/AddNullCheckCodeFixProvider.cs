@@ -29,6 +29,11 @@ namespace Core.Extensions.Analyzers.NullCheck
             Diagnostic diagnostic,
             CancellationToken token)
         {
+            if (diagnostic.Id != NullCheckAnalyzer.Id || diagnostic.AdditionalLocations.Count != 1)
+            {
+                return Task.FromResult(document);
+            }
+
             var node = root.FindNode(diagnostic.AdditionalLocations[0].SourceSpan);
 
             var nullableParametersVisitor = new NullableParametersVisitor(model, token);

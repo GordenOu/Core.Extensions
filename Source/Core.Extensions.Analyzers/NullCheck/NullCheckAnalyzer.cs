@@ -10,7 +10,7 @@ namespace Core.Extensions.Analyzers.NullCheck
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class NullCheckAnalyzer : DiagnosticAnalyzer
     {
-        public const string Id = nameof(NullCheckAnalyzer);
+        public const string Id = nameof(NullCheck);
 
         private static readonly string title = Strings.AddNullCheckTitle;
         private static readonly string message = Strings.AddNullCheckMessage;
