@@ -8,29 +8,6 @@ namespace Core.Extensions.Analyzers.NullCheck
 {
     public class NullableParametersVisitor : CSharpSyntaxVisitor
     {
-        private class ParameterSymbolVisitor : SymbolVisitor
-        {
-            public bool IsNullableParameter { get; private set; } = false;
-
-            public override void VisitParameter(IParameterSymbol symbol)
-            {
-                Visit(symbol.Type);
-            }
-
-            public override void VisitNamedType(INamedTypeSymbol symbol)
-            {
-                if (symbol.IsReferenceType)
-                {
-                    IsNullableParameter = true;
-                }
-            }
-
-            public override void VisitPointerType(IPointerTypeSymbol symbol)
-            {
-                IsNullableParameter = true;
-            }
-        }
-
         public ImmutableArray<NullableParameter> NullableParameters { get; private set; }
 
         private readonly SemanticModel model;
@@ -59,7 +36,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                 {
                     continue;
                 }
-                var visitor = new ParameterSymbolVisitor();
+                var visitor = new NullableParameterVisitor();
                 visitor.Visit(symbol);
                 if (visitor.IsNullableParameter)
                 {

@@ -28,6 +28,11 @@ namespace Core.Extensions.Analyzers.Tests
             nameof(NullCheckTest1Target),
             typeof(NullCheckAnalyzer),
             typeof(AddNullCheckCodeFixProvider))]
+        [DataRow(
+            nameof(NullCheckTest2Source),
+            nameof(NullCheckTest2Target),
+            typeof(NullCheckAnalyzer),
+            typeof(AddNullCheckCodeFixProvider))]
         [DataTestMethod]
         public async Task TestAnalyzers(
             string sourceName,

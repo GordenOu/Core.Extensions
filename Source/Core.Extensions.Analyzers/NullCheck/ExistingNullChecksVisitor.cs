@@ -29,7 +29,7 @@ namespace Core.Extensions.Analyzers.NullCheck
 
             public override void VisitInvocation(IInvocationOperation operation)
             {
-                var notNullMethodVisitor = new NullCheckMethodVisitor();
+                var notNullMethodVisitor = new NullCheckMethodVisitor(operation.Arguments);
                 notNullMethodVisitor.Visit(operation.TargetMethod);
                 if (notNullMethodVisitor.IsNullCheckMethod)
                 {
@@ -40,6 +40,11 @@ namespace Core.Extensions.Analyzers.NullCheck
             public override void VisitArgument(IArgumentOperation operation)
             {
                 Visit(operation.Value);
+            }
+
+            public override void VisitConversion(IConversionOperation operation)
+            {
+                Visit(operation.Operand);
             }
 
             public override void VisitParameterReference(IParameterReferenceOperation operation)

@@ -55,12 +55,17 @@ namespace Core.Extensions.Analyzers.NullCheck
             }
 
             string parameterName = nullableParameter.Syntax.Identifier.Text;
+            var nullCheckMethod = "NotNull";
+            if (nullableParameter.Symbol.Type.Kind == SymbolKind.PointerType)
+            {
+                nullCheckMethod = "NotNullPtr";
+            }
             var generator = SyntaxGenerator.GetGenerator(document);
             var nullCheckStatement = (ExpressionStatementSyntax)generator.ExpressionStatement(
                 generator.InvocationExpression(
                     generator.MemberAccessExpression(
                         generator.IdentifierName("Requires"),
-                        generator.IdentifierName("NotNull")),
+                        generator.IdentifierName(nullCheckMethod)),
                     new[]
                     {
                         generator.IdentifierName(parameterName),
