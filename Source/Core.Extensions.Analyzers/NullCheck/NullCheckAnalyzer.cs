@@ -16,7 +16,8 @@ namespace Core.Extensions.Analyzers.NullCheck
         private static readonly string message = Strings.AddNullCheckMessage;
         private static readonly string category = typeof(NullCheckAnalyzer).Namespace;
 
-        private static readonly DiagnosticDescriptor descriptor = new DiagnosticDescriptor(
+        public static DiagnosticDescriptor Descriptor { get; }
+            = new DiagnosticDescriptor(
             id: Id,
             title: title,
             messageFormat: message,
@@ -25,7 +26,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             isEnabledByDefault: true);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
-            = ImmutableArray.Create(descriptor);
+            = ImmutableArray.Create(Descriptor);
 
         private void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
         {
@@ -48,7 +49,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                 if (!existingNullChecks.Any(nullCheck => nullCheck.ParameterIndex == nullableParameter.Index))
                 {
                     var diagnostic = Diagnostic.Create(
-                        descriptor,
+                        Descriptor,
                         nullableParameter.Syntax.Identifier.GetLocation(),
                         additionalLocations: new[] { context.Node.GetLocation() },
                         properties: ImmutableDictionary<string, string>.Empty.Add(

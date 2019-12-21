@@ -1,8 +1,8 @@
 using Core.Diagnostics;
 
-namespace Core.Extensions.Analyzers.Tests
+namespace Core.Extensions.Analyzers.Tests.NullCheckTests
 {
-    public class NullCheckTest1Target
+    public class ObjectParameterTest1Target
     {
         public void Test(object a)
         {

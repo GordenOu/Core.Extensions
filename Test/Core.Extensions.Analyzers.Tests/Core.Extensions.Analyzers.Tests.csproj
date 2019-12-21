@@ -26,4 +26,11 @@
     <ProjectReference Include="../../Source/Core.Extensions.Analyzers/Core.Extensions.Analyzers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../Source/Core.Extensions.Analyzers/Core.Extensions.Analyzers.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Analyzer</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+
 </Project>

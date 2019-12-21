@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -12,7 +11,7 @@ namespace Core.Extensions.Analyzers.Tests
     {
         private static readonly AdhocWorkspace currentWorkspace = new AdhocWorkspace();
 
-        public static Project GetProject()
+        public static Project GetCurrentProject()
         {
             var projectId = ProjectId.CreateNewId();
             var executingAssembly = Assembly.GetExecutingAssembly();

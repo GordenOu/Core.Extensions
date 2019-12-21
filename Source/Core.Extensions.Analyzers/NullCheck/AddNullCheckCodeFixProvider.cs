@@ -12,7 +12,7 @@ namespace Core.Extensions.Analyzers.NullCheck
     [ExportCodeFixProvider(LanguageNames.CSharp)]
     public class AddNullCheckCodeFixProvider : CodeFixProvider
     {
-        private static readonly string title = Strings.AddNullCheckTitle;
+        public static string Title { get; } = Strings.AddNullCheckTitle;
 
         public override ImmutableArray<string> FixableDiagnosticIds { get; }
             = ImmutableArray.Create(NullCheckAnalyzer.Id);
@@ -65,9 +65,9 @@ namespace Core.Extensions.Analyzers.NullCheck
             foreach (var diagnostic in context.Diagnostics)
             {
                 var codeAction = CodeAction.Create(
-                    title,
+                    Title,
                     token => FixDiagnostic(document, syntaxRoot, semanticModel, diagnostic, token),
-                    equivalenceKey: title);
+                    equivalenceKey: Title);
                 context.RegisterCodeFix(codeAction, diagnostic);
             }
         }

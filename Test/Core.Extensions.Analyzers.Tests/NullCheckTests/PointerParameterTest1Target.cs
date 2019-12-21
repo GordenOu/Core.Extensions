@@ -1,8 +1,8 @@
 using Core.Diagnostics;
 
-namespace Core.Extensions.Analyzers.Tests
+namespace Core.Extensions.Analyzers.Tests.NullCheckTests
 {
-    public class NullCheckTest2Target
+    public class PointerParameterTest1Target
     {
         public unsafe void Test(int* a)
         {
