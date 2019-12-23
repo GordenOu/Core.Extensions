@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -18,7 +19,7 @@ namespace Core.Extensions.Analyzers.Tests
 
         public abstract Diagnostic[] GetExpectedDiagnostics(SyntaxNode root);
 
-        public abstract bool IsExpectedCodeFix(CodeAction action);
+        public abstract bool IsExpectedCodeFix(CodeAction action, ImmutableArray<Diagnostic> diagnostics);
 
         public abstract SyntaxNode GetFixedNode(SyntaxNode root);
 
@@ -40,25 +41,33 @@ namespace Core.Extensions.Analyzers.Tests
 
             var analyzer = (DiagnosticAnalyzer)Activator.CreateInstance(AnalyzerType);
             var compilationWithAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create(analyzer));
-            var root = await solution.GetDocument(sourceDocumentId).GetSyntaxRootAsync();
+            var tree = await solution.GetDocument(sourceDocumentId).GetSyntaxTreeAsync();
+            var root = await tree.GetRootAsync();
             var expectedDiagnostics = GetExpectedDiagnostics(root);
-            var analyzerDiagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
+            var model = compilationWithAnalyzers.Compilation.GetSemanticModel(tree);
+            var analyzerDiagnostics = await compilationWithAnalyzers.GetAnalyzerSemanticDiagnosticsAsync(
+                model,
+                default,
+                default);
             CollectionAssert.AreEquivalent(expectedDiagnostics, analyzerDiagnostics);
 
             var codeFixProvider = (CodeFixProvider)Activator.CreateInstance(CodeFixProviderType);
             var codeFixes = new List<CodeAction>();
-            var codeFixContext = new CodeFixContext(
-                solution.GetDocument(sourceDocumentId),
-                analyzerDiagnostics[0],
-                (action, _) =>
-                {
-                    if (IsExpectedCodeFix(action))
+            foreach (var diagnostic in analyzerDiagnostics)
+            {
+                var codeFixContext = new CodeFixContext(
+                    solution.GetDocument(sourceDocumentId),
+                    diagnostic,
+                    (action, diagnostics) =>
                     {
-                        codeFixes.Add(action);
-                    }
-                },
-                default);
-            await codeFixProvider.RegisterCodeFixesAsync(codeFixContext);
+                        if (IsExpectedCodeFix(action, diagnostics))
+                        {
+                            codeFixes.Add(action);
+                        }
+                    },
+                    default);
+                await codeFixProvider.RegisterCodeFixesAsync(codeFixContext);
+            }
             Assert.AreEqual(1, codeFixes.Count);
             var operations = await codeFixes[0].GetOperationsAsync(default);
             Assert.AreEqual(1, operations.Length);
@@ -69,14 +78,14 @@ namespace Core.Extensions.Analyzers.Tests
             var expectedFixedNode = GetFixedNode(targetRoot)
                 .ToFullString()
                 .Replace("\r\n", "\n")
-                .Replace("\r", "\n");;
+                .Replace("\r", "\n"); ;
             var operation = (ApplyChangesOperation)operations[0];
             var fixedDocument = operation.ChangedSolution.GetDocument(sourceDocumentId);
             var fixedRoot = await fixedDocument.GetSyntaxRootAsync();
             var fixedNode = GetFixedNode(fixedRoot)
                 .ToFullString()
                 .Replace("\r\n", "\n")
-                .Replace("\r", "\n");;
+                .Replace("\r", "\n"); ;
             Assert.AreEqual(expectedFixedNode, fixedNode);
         }
     }

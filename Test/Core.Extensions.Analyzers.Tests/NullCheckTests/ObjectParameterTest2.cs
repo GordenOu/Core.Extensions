@@ -10,11 +10,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Core.Extensions.Analyzers.Tests.NullCheckTests
 {
     [TestClass]
-    public class ObjectParameterTest1 : NullCheckTest
+    public class ObjectParameterTest2 : NullCheckTest
     {
         public override Diagnostic[] GetExpectedDiagnostics(SyntaxNode root)
         {
-            var parameter = GetParameter(root, 0);
+            var parameter = GetParameter(root, 1);
             return new[]
             {
                 Diagnostic.Create(NullCheckAnalyzer.Descriptor, parameter.Identifier.GetLocation())

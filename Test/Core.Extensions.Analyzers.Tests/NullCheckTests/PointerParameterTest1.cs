@@ -1,7 +1,9 @@
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Extensions.Analyzers.NullCheck;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,19 +14,16 @@ namespace Core.Extensions.Analyzers.Tests.NullCheckTests
     {
         public override Diagnostic[] GetExpectedDiagnostics(SyntaxNode root)
         {
-            var methodDeclaration = root
-                .DescendantNodes()
-                .OfType<MethodDeclarationSyntax>()
-                .Single();
-            var parameter = methodDeclaration
-                .DescendantNodes()
-                .OfType<ParameterListSyntax>()
-                .Single()
-                .Parameters[0];
+            var parameter = GetParameter(root, 0);
             return new[]
             {
                 Diagnostic.Create(NullCheckAnalyzer.Descriptor, parameter.Identifier.GetLocation())
             };
+        }
+
+        public override bool IsExpectedCodeFix(CodeAction action, ImmutableArray<Diagnostic> diagnostics)
+        {
+            return action.Title == AddNullCheckCodeFixProvider.Title;
         }
 
         [TestMethod]

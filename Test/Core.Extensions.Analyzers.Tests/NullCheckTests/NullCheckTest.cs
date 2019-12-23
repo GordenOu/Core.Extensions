@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Core.Extensions.Analyzers.NullCheck;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Core.Extensions.Analyzers.Tests.NullCheckTests
@@ -13,16 +12,25 @@ namespace Core.Extensions.Analyzers.Tests.NullCheckTests
 
         public override Type CodeFixProviderType { get; } = typeof(AddNullCheckCodeFixProvider);
 
-        public override bool IsExpectedCodeFix(CodeAction action)
-        {
-            return action.Title == AddNullCheckCodeFixProvider.Title;
-        }
-
         public override SyntaxNode GetFixedNode(SyntaxNode root)
         {
             return root.DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
                 .Single();
+        }
+
+        public static ParameterSyntax GetParameter(SyntaxNode root, int index)
+        {
+            var methodDeclaration = root
+                .DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .Single();
+            var parameter = methodDeclaration
+                .DescendantNodes()
+                .OfType<ParameterListSyntax>()
+                .Single()
+                .Parameters[index];
+            return parameter;
         }
     }
 }
