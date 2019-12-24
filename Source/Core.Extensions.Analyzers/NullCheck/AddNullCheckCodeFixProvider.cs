@@ -23,9 +23,12 @@ namespace Core.Extensions.Analyzers.NullCheck
             return WellKnownFixAllProviders.BatchFixer;
         }
 
-        private async Task<Document> FixDiagnostic(
+        private Document FixDiagnostic(
             Document document,
             Diagnostic diagnostic,
+            SyntaxNode root,
+            SemanticModel model,
+            SyntaxNode node,
             CancellationToken token)
         {
             if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
@@ -33,18 +36,6 @@ namespace Core.Extensions.Analyzers.NullCheck
             {
                 return document;
             }
-
-            var root = await document.GetSyntaxRootAsync(token);
-            var node = root.FindNode(diagnostic.Location.SourceSpan)
-                .Ancestors()
-                .OfType<MethodDeclarationSyntax>()
-                .FirstOrDefault();
-            if (node is null)
-            {
-                return document;
-            }
-
-            var model = await document.GetSemanticModelAsync(token);
 
             var nullableParametersVisitor = new NullableParametersVisitor(model, token);
             nullableParametersVisitor.Visit(node);
@@ -65,21 +56,45 @@ namespace Core.Extensions.Analyzers.NullCheck
             return newDocument;
         }
 
-        public override Task RegisterCodeFixesAsync(CodeFixContext context)
+        public override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
+            var document = context.Document;
+            var token = context.CancellationToken;
+            var root = await document.GetSyntaxRootAsync(token);
+            if (root is null)
+            {
+                return;
+            }
+            var model = await document.GetSemanticModelAsync(token);
+            if (model is null)
+            {
+                return;
+            }
+
             foreach (var diagnostic in context.Diagnostics)
             {
                 if (diagnostic.Id != NullCheckAnalyzer.Id)
                 {
                     continue;
                 }
+                var node = root.FindNode(diagnostic.Location.SourceSpan)
+                    .Ancestors()
+                    .OfType<MethodDeclarationSyntax>()
+                    .FirstOrDefault();
+                if (node is null)
+                {
+                    continue;
+                }
                 var codeAction = CodeAction.Create(
                     Title,
-                    token => FixDiagnostic(context.Document, diagnostic, token),
+                    token =>
+                    {
+                        var newDocument = FixDiagnostic(document, diagnostic, root, model, node, token);
+                        return Task.FromResult(newDocument);
+                    },
                     equivalenceKey: Title);
                 context.RegisterCodeFix(codeAction, diagnostic);
             }
-            return Task.CompletedTask;
         }
     }
 }

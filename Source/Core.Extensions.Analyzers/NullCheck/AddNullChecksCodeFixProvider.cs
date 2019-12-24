@@ -24,9 +24,11 @@ namespace Core.Extensions.Analyzers.NullCheck
             return WellKnownFixAllProviders.BatchFixer;
         }
 
-        private async Task<Document> FixDiagnostics(
+        private Document FixDiagnostics(
             Document document,
             ImmutableArray<Diagnostic> diagnostics,
+            SyntaxNode root,
+            SemanticModel model,
             SyntaxNode node,
             CancellationToken token)
         {
@@ -39,9 +41,6 @@ namespace Core.Extensions.Analyzers.NullCheck
                     parameterIndexes.Add(parameterIndex);
                 }
             }
-
-            var root = await document.GetSyntaxRootAsync(token);
-            var model = await document.GetSemanticModelAsync(token);
 
             var nullableParametersVisitor = new NullableParametersVisitor(model, token);
             nullableParametersVisitor.Visit(node);
@@ -59,13 +58,23 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             var document = context.Document;
             var token = context.CancellationToken;
+            var root = await document.GetSyntaxRootAsync(token);
+            if (root is null)
+            {
+                return;
+            }
+            var model = await document.GetSemanticModelAsync(token);
+            if (model is null)
+            {
+                return;
+            }
+
             foreach (var diagnostic in context.Diagnostics)
             {
                 if (diagnostic.Id != NullCheckAnalyzer.Id)
                 {
                     continue;
                 }
-                var root = await document.GetSyntaxRootAsync(token);
                 var node = root.FindNode(diagnostic.Location.SourceSpan)
                     .Ancestors()
                     .OfType<MethodDeclarationSyntax>()
@@ -74,13 +83,22 @@ namespace Core.Extensions.Analyzers.NullCheck
                 {
                     continue;
                 }
-                var model = await document.GetSemanticModelAsync(token);
                 var methodNullCheckDiagnostics = NullCheckAnalyzer.GetDiagnostics(node, model, token);
                 if (methodNullCheckDiagnostics.Length > 1)
                 {
                     var codeAction = CodeAction.Create(
                       Title,
-                      token => FixDiagnostics(document, methodNullCheckDiagnostics, node, token),
+                      token =>
+                      {
+                          var newDocument = FixDiagnostics(
+                              document,
+                              methodNullCheckDiagnostics,
+                              root,
+                              model,
+                              node,
+                              token);
+                          return Task.FromResult(newDocument);
+                      },
                       equivalenceKey: Title);
                     context.RegisterCodeFix(codeAction, diagnostic);
                 }

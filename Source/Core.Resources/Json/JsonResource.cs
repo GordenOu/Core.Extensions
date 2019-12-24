@@ -40,13 +40,13 @@ namespace Core.Resources.Json
             if (value != null)
             {
                 var element = (JsonElement)value;
-                if (element.Type == JsonValueType.String)
+                if (element.ValueKind == JsonValueKind.String)
                 {
                     return element.GetString();
                 }
                 else
                 {
-                    throw new InvalidOperationException(nameof(JsonValueType));
+                    throw new InvalidOperationException(nameof(JsonValueKind));
                 }
             }
             else
@@ -85,13 +85,13 @@ namespace Core.Resources.Json
             if (value != null)
             {
                 var element = (JsonElement)value;
-                if (element.Type == JsonValueType.String)
+                if (element.ValueKind == JsonValueKind.String)
                 {
                     return element.GetString();
                 }
                 else
                 {
-                    throw new InvalidOperationException(nameof(JsonValueType));
+                    throw new InvalidOperationException(nameof(JsonValueKind));
                 }
             }
             else

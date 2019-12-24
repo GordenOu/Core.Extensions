@@ -32,7 +32,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             this.token = token;
         }
 
-        public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
+        public override SyntaxNode? VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             var existingNullChecksVisitor = new ExistingNullChecksVisitor(model, token);
             existingNullChecksVisitor.Visit(node);

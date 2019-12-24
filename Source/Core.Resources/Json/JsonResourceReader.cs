@@ -58,9 +58,9 @@ namespace Core.Resources.Json
             }
 
             document = JsonDocument.Parse(stream);
-            if (document.RootElement.Type != JsonValueType.Object)
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
             {
-                throw new InvalidOperationException(nameof(JsonValueType));
+                throw new InvalidOperationException(nameof(JsonValueKind));
             }
         }
 

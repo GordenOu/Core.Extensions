@@ -20,23 +20,23 @@ namespace Core.Resources.Tests
             Assert.AreEqual("测试", GetString("Test"));
 
             var element = GetJsonElement("bool");
-            Assert.AreEqual(JsonValueType.True, element?.Type);
+            Assert.AreEqual(JsonValueKind.True, element?.ValueKind);
 
             element = GetJsonElement("object");
-            Assert.AreEqual(JsonValueType.Object, element?.Type);
+            Assert.AreEqual(JsonValueKind.Object, element?.ValueKind);
             var properties = element?.EnumerateObject().ToArray();
             Assert.AreEqual(1, properties.Length);
             Assert.AreEqual("name", properties[0].Name);
-            Assert.AreEqual(JsonValueType.String, properties[0].Value.Type);
+            Assert.AreEqual(JsonValueKind.String, properties[0].Value.ValueKind);
             Assert.AreEqual("value", properties[0].Value.GetString());
 
             element = GetJsonElement("array");
-            Assert.AreEqual(JsonValueType.Array, element?.Type);
+            Assert.AreEqual(JsonValueKind.Array, element?.ValueKind);
             var elements = element?.EnumerateArray().ToArray();
             Assert.AreEqual(3, elements.Length);
             for (int i = 0; i < 3; i++)
             {
-                Assert.AreEqual(JsonValueType.String, elements[i].Type);
+                Assert.AreEqual(JsonValueKind.String, elements[i].ValueKind);
                 Assert.AreEqual($"test{i + 1}", elements[i].GetString());
             }
         }
