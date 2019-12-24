@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -28,6 +29,36 @@ namespace Core.Extensions.Analyzers.NullCheck
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
             = ImmutableArray.Create(Descriptor);
 
+        public static ImmutableArray<Diagnostic> GetDiagnostics(
+            SyntaxNode node,
+            SemanticModel model,
+            CancellationToken token)
+        {
+            var nullableParametersVisitor = new NullableParametersVisitor(model, token);
+            nullableParametersVisitor.Visit(node);
+            var nullableParameters = nullableParametersVisitor.NullableParameters;
+
+            var existingNullChecksVisitor = new ExistingNullChecksVisitor(model, token);
+            existingNullChecksVisitor.Visit(node);
+            var existingNullChecks = existingNullChecksVisitor.ExistingNullChecks;
+
+            var builder = ImmutableArray.CreateBuilder<Diagnostic>();
+            foreach (var nullableParameter in nullableParameters)
+            {
+                if (!existingNullChecks.Any(nullCheck => nullCheck.ParameterIndex == nullableParameter.Index))
+                {
+                    var diagnostic = Diagnostic.Create(
+                        Descriptor,
+                        nullableParameter.Syntax.Identifier.GetLocation(),
+                        properties: ImmutableDictionary<string, string>.Empty.Add(
+                            nameof(NullableParameter.Index),
+                            nullableParameter.Index.ToString()));
+                    builder.Add(diagnostic);
+                }
+            }
+            return builder.ToImmutable();
+        }
+
         private void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
         {
             var semanticModel = context.SemanticModel;
@@ -36,27 +67,11 @@ namespace Core.Extensions.Analyzers.NullCheck
                 return;
             }
 
-            var nullableParametersVisitor = new NullableParametersVisitor(semanticModel, context.CancellationToken);
-            nullableParametersVisitor.Visit(context.Node);
-            var nullableParameters = nullableParametersVisitor.NullableParameters;
+            var diagnostics = GetDiagnostics(context.Node, semanticModel, context.CancellationToken);
 
-            var existingNullChecksVisitor = new ExistingNullChecksVisitor(semanticModel, context.CancellationToken);
-            existingNullChecksVisitor.Visit(context.Node);
-            var existingNullChecks = existingNullChecksVisitor.ExistingNullChecks;
-
-            foreach (var nullableParameter in nullableParameters)
+            foreach (var diagnostic in diagnostics)
             {
-                if (!existingNullChecks.Any(nullCheck => nullCheck.ParameterIndex == nullableParameter.Index))
-                {
-                    var diagnostic = Diagnostic.Create(
-                        Descriptor,
-                        nullableParameter.Syntax.Identifier.GetLocation(),
-                        additionalLocations: new[] { context.Node.GetLocation() },
-                        properties: ImmutableDictionary<string, string>.Empty.Add(
-                            nameof(NullableParameter.Index),
-                            nullableParameter.Index.ToString()));
-                    context.ReportDiagnostic(diagnostic);
-                }
+                context.ReportDiagnostic(diagnostic);
             }
         }
 

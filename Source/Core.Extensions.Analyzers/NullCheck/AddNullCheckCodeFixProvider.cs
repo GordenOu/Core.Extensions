@@ -6,6 +6,7 @@ using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Core.Extensions.Analyzers.NullCheck
 {
@@ -22,54 +23,63 @@ namespace Core.Extensions.Analyzers.NullCheck
             return WellKnownFixAllProviders.BatchFixer;
         }
 
-        private Task<Document> FixDiagnostic(
+        private async Task<Document> FixDiagnostic(
             Document document,
-            SyntaxNode root,
-            SemanticModel model,
             Diagnostic diagnostic,
             CancellationToken token)
         {
-            if (diagnostic.Id != NullCheckAnalyzer.Id || diagnostic.AdditionalLocations.Count != 1)
+            if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
+                || !int.TryParse(index, out int parameterIndex))
             {
-                return Task.FromResult(document);
+                return document;
             }
 
-            var node = root.FindNode(diagnostic.AdditionalLocations[0].SourceSpan);
+            var root = await document.GetSyntaxRootAsync(token);
+            var node = root.FindNode(diagnostic.Location.SourceSpan)
+                .Ancestors()
+                .OfType<MethodDeclarationSyntax>()
+                .FirstOrDefault();
+            if (node is null)
+            {
+                return document;
+            }
+
+            var model = await document.GetSemanticModelAsync(token);
 
             var nullableParametersVisitor = new NullableParametersVisitor(model, token);
             nullableParametersVisitor.Visit(node);
             var nullableParameters = nullableParametersVisitor.NullableParameters;
-
-            if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
-                || !int.TryParse(index, out int parameterIndex))
-            {
-                return Task.FromResult(document);
-            }
             var nullableParameter = nullableParameters.SingleOrDefault(x => x.Index == parameterIndex);
             if (nullableParameter is null)
             {
-                return Task.FromResult(document);
+                return document;
             }
 
-            var addNullCheckRewriter = new AddNullCheckRewriter(document, model, nullableParameter, token);
-            var newNode = addNullCheckRewriter.Visit(node);
+            var addNullChecksRewriter = new AddNullChecksRewriter(
+                document,
+                model,
+                ImmutableArray.Create(nullableParameter),
+                token);
+            var newNode = addNullChecksRewriter.Visit(node);
             var newDocument = document.WithSyntaxRoot(root.ReplaceNode(node, newNode));
-            return Task.FromResult(newDocument);
+            return newDocument;
         }
 
-        public override async Task RegisterCodeFixesAsync(CodeFixContext context)
+        public override Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            var document = context.Document;
-            var syntaxRoot = await document.GetSyntaxRootAsync(context.CancellationToken);
-            var semanticModel = await document.GetSemanticModelAsync(context.CancellationToken);
             foreach (var diagnostic in context.Diagnostics)
             {
+                if (diagnostic.Id != NullCheckAnalyzer.Id)
+                {
+                    continue;
+                }
                 var codeAction = CodeAction.Create(
                     Title,
-                    token => FixDiagnostic(document, syntaxRoot, semanticModel, diagnostic, token),
+                    token => FixDiagnostic(context.Document, diagnostic, token),
                     equivalenceKey: Title);
                 context.RegisterCodeFix(codeAction, diagnostic);
             }
+            return Task.CompletedTask;
         }
     }
 }

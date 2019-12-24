@@ -1,10 +1,8 @@
 using System.Collections.Immutable;
-using System.Linq;
 using System.Threading.Tasks;
 using Core.Extensions.Analyzers.NullCheck;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Extensions.Analyzers.Tests.NullCheckTests
