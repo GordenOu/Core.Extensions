@@ -7,9 +7,11 @@ using Microsoft.CodeAnalysis.CodeFixes;
 namespace Core.Extensions.Analyzers.NullCheck
 {
     [ExportCodeFixProvider(LanguageNames.CSharp)]
-    public class AddRequiresNullCheckCodeFixProvider : AddNullCheckCodeFixProvider
+    public class AddDebugNullChecksCodeFixProvider : AddNullChecksCodeFixProvider
     {
-        public override string Title { get; } = Strings.AddRequiresNullCheckTitle;
+        public override string AddNullCheckTitle { get; } = Strings.AddDebugNullCheckTitle;
+
+        public override string AddNullChecksTitle { get; } = Strings.AddDebugNullChecksTitle;
 
         public override AddNullChecksRewriter GetRewriter(
             Document document,
@@ -17,7 +19,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             ImmutableArray<NullableParameter> nullableParameters,
             CancellationToken token)
         {
-            return new AddRequiresNullChecksRewriter(document, model, nullableParameters, token);
+            return new AddDebugNullChecksRewriter(document, model, nullableParameters, token);
         }
     }
 }

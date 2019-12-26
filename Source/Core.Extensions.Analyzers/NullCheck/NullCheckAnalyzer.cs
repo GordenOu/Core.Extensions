@@ -14,7 +14,7 @@ namespace Core.Extensions.Analyzers.NullCheck
         public const string Id = nameof(NullCheck);
 
         private static readonly string title = Strings.AddRequiresNullCheckTitle;
-        private static readonly string message = Strings.AddNullCheckMessage;
+        private static readonly string message = Strings.MissingNullCheckMessage;
         private static readonly string category = typeof(NullCheckAnalyzer).Namespace;
 
         public static DiagnosticDescriptor Descriptor { get; }

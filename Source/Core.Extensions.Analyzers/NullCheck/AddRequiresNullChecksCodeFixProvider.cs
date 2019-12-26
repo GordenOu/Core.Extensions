@@ -9,7 +9,9 @@ namespace Core.Extensions.Analyzers.NullCheck
     [ExportCodeFixProvider(LanguageNames.CSharp)]
     public class AddRequiresNullChecksCodeFixProvider : AddNullChecksCodeFixProvider
     {
-        public override string Title { get; } = Strings.AddRequiresNullChecksTitle;
+        public override string AddNullCheckTitle { get; } = Strings.AddRequiresNullCheckTitle;
+
+        public override string AddNullChecksTitle { get; } = Strings.AddRequiresNullChecksTitle;
 
         public override AddNullChecksRewriter GetRewriter(
             Document document,

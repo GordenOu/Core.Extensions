@@ -13,7 +13,9 @@ namespace Core.Extensions.Analyzers.NullCheck
     [ExportCodeFixProvider(LanguageNames.CSharp)]
     public abstract class AddNullChecksCodeFixProvider : CodeFixProvider
     {
-        public abstract string Title { get; }
+        public abstract string AddNullCheckTitle { get; }
+
+        public abstract string AddNullChecksTitle { get; }
 
         public override ImmutableArray<string> FixableDiagnosticIds { get; }
             = ImmutableArray.Create(NullCheckAnalyzer.Id);
@@ -23,11 +25,31 @@ namespace Core.Extensions.Analyzers.NullCheck
             return WellKnownFixAllProviders.BatchFixer;
         }
 
+        public virtual bool FilterDiagnostic(NullableParameter parameter) => true;
+
         public abstract AddNullChecksRewriter GetRewriter(
             Document document,
             SemanticModel model,
             ImmutableArray<NullableParameter> nullableParameters,
             CancellationToken token);
+
+        private Document FixDiagnostic(
+            Document document,
+            NullableParameter nullableParameter,
+            SyntaxNode root,
+            SemanticModel model,
+            SyntaxNode node,
+            CancellationToken token)
+        {
+            var addNullChecksRewriter = GetRewriter(
+                document,
+                model,
+                ImmutableArray.Create(nullableParameter),
+                token);
+            var newNode = addNullChecksRewriter.Visit(node);
+            var newDocument = document.WithSyntaxRoot(root.ReplaceNode(node, newNode));
+            return newDocument;
+        }
 
         private Document FixDiagnostics(
             Document document,
@@ -88,11 +110,43 @@ namespace Core.Extensions.Analyzers.NullCheck
                 {
                     continue;
                 }
+                if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
+                || !int.TryParse(index, out int parameterIndex))
+                {
+                    continue;
+                }
+                var nullableParametersVisitor = new NullableParametersVisitor(model, token);
+                nullableParametersVisitor.Visit(node);
+                var nullableParameters = nullableParametersVisitor.NullableParameters;
+                var nullableParameter = nullableParameters.SingleOrDefault(x => x.Index == parameterIndex);
+                if (nullableParameter is null)
+                {
+                    continue;
+                }
+                if (!FilterDiagnostic(nullableParameter))
+                {
+                    continue;
+                }
+
+                // Add null check.
+                {
+                    var codeAction = CodeAction.Create(
+                    AddNullCheckTitle,
+                    token =>
+                    {
+                        var newDocument = FixDiagnostic(document, nullableParameter, root, model, node, token);
+                        return Task.FromResult(newDocument);
+                    },
+                    equivalenceKey: AddNullCheckTitle);
+                    context.RegisterCodeFix(codeAction, diagnostic);
+                }
+
+                // Add null checks.
                 var methodNullCheckDiagnostics = NullCheckAnalyzer.GetDiagnostics(node, model, token);
                 if (methodNullCheckDiagnostics.Length > 1)
                 {
                     var codeAction = CodeAction.Create(
-                      Title,
+                      AddNullChecksTitle,
                       token =>
                       {
                           var newDocument = FixDiagnostics(
@@ -104,7 +158,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                               token);
                           return Task.FromResult(newDocument);
                       },
-                      equivalenceKey: Title);
+                      equivalenceKey: AddNullChecksTitle);
                     context.RegisterCodeFix(codeAction, diagnostic);
                 }
             }
