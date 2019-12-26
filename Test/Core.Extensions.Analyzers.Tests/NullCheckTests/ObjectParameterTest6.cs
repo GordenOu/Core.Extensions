@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Core.Extensions.Analyzers.NullCheck;
+using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,7 +24,7 @@ namespace Core.Extensions.Analyzers.Tests.NullCheckTests
 
         public override bool IsExpectedCodeFix(CodeAction action, ImmutableArray<Diagnostic> diagnostics)
         {
-            if (action.Title != AddNullCheckCodeFixProvider.Title)
+            if (action.Title != Strings.AddRequiresNullCheckTitle)
             {
                 return false;
             }

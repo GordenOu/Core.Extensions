@@ -7,11 +7,10 @@ using Core.Extensions.Analyzers.SyntaxExtensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Editing;
 
 namespace Core.Extensions.Analyzers.NullCheck
 {
-    public class AddNullChecksRewriter : CSharpSyntaxRewriter
+    public abstract class AddNullChecksRewriter : CSharpSyntaxRewriter
     {
         private readonly Document document;
         private readonly SemanticModel model;
@@ -40,30 +39,9 @@ namespace Core.Extensions.Analyzers.NullCheck
             return base.VisitMethodDeclaration(node);
         }
 
-        private static ExpressionStatementSyntax GenerateNullCheckStatement(
+        public abstract ExpressionStatementSyntax GenerateNullCheckStatement(
             Document document,
-            NullableParameter nullableParameter)
-        {
-            string parameterName = nullableParameter.Syntax.Identifier.Text;
-            var nullCheckMethod = "NotNull";
-            if (nullableParameter.Symbol.Type.Kind == SymbolKind.PointerType)
-            {
-                nullCheckMethod = "NotNullPtr";
-            }
-            var generator = SyntaxGenerator.GetGenerator(document);
-            var nullCheckStatement = generator.ExpressionStatement(
-                generator.InvocationExpression(
-                    generator.MemberAccessExpression(
-                        generator.IdentifierName("Requires"),
-                        generator.IdentifierName(nullCheckMethod)),
-                    new[]
-                    {
-                        generator.IdentifierName(parameterName),
-                        generator.NameOfExpression(generator.IdentifierName(parameterName))
-                    }))
-                .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
-            return (ExpressionStatementSyntax)nullCheckStatement;
-        }
+            NullableParameter nullableParameter);
 
         public override SyntaxNode VisitBlock(BlockSyntax node)
         {

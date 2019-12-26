@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -11,9 +10,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Core.Extensions.Analyzers.NullCheck
 {
     [ExportCodeFixProvider(LanguageNames.CSharp)]
-    public class AddNullCheckCodeFixProvider : CodeFixProvider
+    public abstract class AddNullCheckCodeFixProvider : CodeFixProvider
     {
-        public static string Title { get; } = Strings.AddNullCheckTitle;
+        public abstract string Title { get; }
 
         public override ImmutableArray<string> FixableDiagnosticIds { get; }
             = ImmutableArray.Create(NullCheckAnalyzer.Id);
@@ -22,6 +21,12 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             return WellKnownFixAllProviders.BatchFixer;
         }
+
+        public abstract AddNullChecksRewriter GetRewriter(
+            Document document,
+            SemanticModel model,
+            ImmutableArray<NullableParameter> nullableParameters,
+            CancellationToken token);
 
         private Document FixDiagnostic(
             Document document,
@@ -46,7 +51,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                 return document;
             }
 
-            var addNullChecksRewriter = new AddNullChecksRewriter(
+            var addNullChecksRewriter = GetRewriter(
                 document,
                 model,
                 ImmutableArray.Create(nullableParameter),

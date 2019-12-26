@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -12,9 +11,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Core.Extensions.Analyzers.NullCheck
 {
     [ExportCodeFixProvider(LanguageNames.CSharp)]
-    public class AddNullChecksCodeFixProvider : CodeFixProvider
+    public abstract class AddNullChecksCodeFixProvider : CodeFixProvider
     {
-        public static string Title { get; } = Strings.AddNullChecksTitle;
+        public abstract string Title { get; }
 
         public override ImmutableArray<string> FixableDiagnosticIds { get; }
             = ImmutableArray.Create(NullCheckAnalyzer.Id);
@@ -23,6 +22,12 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             return WellKnownFixAllProviders.BatchFixer;
         }
+
+        public abstract AddNullChecksRewriter GetRewriter(
+            Document document,
+            SemanticModel model,
+            ImmutableArray<NullableParameter> nullableParameters,
+            CancellationToken token);
 
         private Document FixDiagnostics(
             Document document,
@@ -48,7 +53,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                 .Where(x => parameterIndexes.Contains(x.Index))
                 .ToImmutableArray();
 
-            var addNullChecksRewriter = new AddNullChecksRewriter(document, model, nullableParameters, token);
+            var addNullChecksRewriter = GetRewriter(document, model, nullableParameters, token);
             var newNode = addNullChecksRewriter.Visit(node);
             var newDocument = document.WithSyntaxRoot(root.ReplaceNode(node, newNode));
             return newDocument;

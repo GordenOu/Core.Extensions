@@ -10,7 +10,7 @@ namespace Core.Extensions.Analyzers.Tests.NullCheckTests
     {
         public override Type AnalyzerType { get; } = typeof(NullCheckAnalyzer);
 
-        public override Type CodeFixProviderType { get; } = typeof(AddNullCheckCodeFixProvider);
+        public override Type CodeFixProviderType { get; } = typeof(AddRequiresNullCheckCodeFixProvider);
 
         public override SyntaxNode GetFixedNode(SyntaxNode root)
         {
