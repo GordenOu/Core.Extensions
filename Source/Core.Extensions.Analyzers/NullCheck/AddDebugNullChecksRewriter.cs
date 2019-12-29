@@ -34,9 +34,9 @@ namespace Core.Extensions.Analyzers.NullCheck
                     {
                         generator.LogicalNotExpression(
                             SyntaxFactory.IsPatternExpression(
-                            SyntaxFactory.IdentifierName(parameterName),
-                            SyntaxFactory.ConstantPattern(
-                                SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression))))
+                                SyntaxFactory.IdentifierName(parameterName),
+                                SyntaxFactory.ConstantPattern(
+                                    SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression))))
                     }))
                 .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
             return (ExpressionStatementSyntax)nullCheckStatement;

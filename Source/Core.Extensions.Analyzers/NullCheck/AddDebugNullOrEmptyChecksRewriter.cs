@@ -35,9 +35,9 @@ namespace Core.Extensions.Analyzers.NullCheck
                         new[] { SyntaxFactory.IdentifierName(parameterName) })),
                 _ => generator.LogicalNotExpression(
                     SyntaxFactory.IsPatternExpression(
-                    SyntaxFactory.IdentifierName(parameterName),
-                    SyntaxFactory.ConstantPattern(
-                        SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression))))
+                        SyntaxFactory.IdentifierName(parameterName),
+                        SyntaxFactory.ConstantPattern(
+                            SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression))))
             };
             var nullCheckStatement = generator.ExpressionStatement(
                 generator.InvocationExpression(

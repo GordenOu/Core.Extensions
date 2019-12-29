@@ -111,7 +111,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                     continue;
                 }
                 if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
-                || !int.TryParse(index, out int parameterIndex))
+                    || !int.TryParse(index, out int parameterIndex))
                 {
                     continue;
                 }
