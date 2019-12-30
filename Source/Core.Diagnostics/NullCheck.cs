@@ -116,6 +116,36 @@ namespace Core.Diagnostics
         }
 
         /// <summary>
+        /// Throws <see cref="ArgumentNullException"/> if the string parameter is null, and throws
+        /// <see cref="ArgumentException"/> if the string parameter is empty, or consists only of white-space
+        /// characters.
+        /// </summary>
+        /// <param name="value">
+        /// The value of the string parameter.
+        /// </param>
+        /// <param name="paramName">
+        /// The name of the string parameter.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="value"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="value"/> is empty, or consists only of white-space characters.
+        /// </exception>
+        [DebuggerStepThrough]
+        public static void NotNullOrWhitespace(string value, string paramName)
+        {
+            if (value is null)
+            {
+                throw new ArgumentNullException(paramName, Strings.NonWhitespaceString);
+            }
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException(Strings.NonWhitespaceString, paramName);
+            }
+        }
+
+        /// <summary>
         /// Throws <see cref="ArgumentException"/> if the collection parameter contains null items.
         /// </summary>
         /// <typeparam name="T">

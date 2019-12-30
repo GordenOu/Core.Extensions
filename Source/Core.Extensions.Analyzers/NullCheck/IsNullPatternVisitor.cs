@@ -14,6 +14,11 @@ namespace Core.Extensions.Analyzers.NullCheck
 
         public override void VisitConversion(IConversionOperation operation)
         {
+            Visit(operation.Operand);
+        }
+
+        public override void VisitLiteral(ILiteralOperation operation)
+        {
             if (operation.ConstantValue.HasValue && operation.ConstantValue.Value is null)
             {
                 Matched = true;

@@ -25,7 +25,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             return WellKnownFixAllProviders.BatchFixer;
         }
 
-        public virtual bool FilterDiagnostic(NullableParameter parameter) => true;
+        public virtual bool ShouldRegisterCodeFix(NullableParameter parameter) => true;
 
         public abstract AddNullChecksRewriter GetRewriter(
             Document document,
@@ -123,7 +123,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                 {
                     continue;
                 }
-                if (!FilterDiagnostic(nullableParameter))
+                if (!ShouldRegisterCodeFix(nullableParameter))
                 {
                     continue;
                 }

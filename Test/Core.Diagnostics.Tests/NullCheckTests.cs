@@ -46,6 +46,25 @@ namespace Core.Diagnostics.Tests
             Assert.AreEqual("string", paramName);
         }
 
+
+        [TestMethod]
+        public void NotNullOrWhitespace()
+        {
+            Requires.NotNullOrWhitespace("a", string.Empty);
+
+            string paramName;;
+
+            paramName = Assert.ThrowsException<ArgumentNullException>(
+                () => Requires.NotNullOrWhitespace(null, "string")).ParamName;
+            Assert.AreEqual("string", paramName);
+            paramName = Assert.ThrowsException<ArgumentException>(
+                () => Requires.NotNullOrWhitespace(string.Empty, "string")).ParamName;
+            Assert.AreEqual("string", paramName);
+            paramName = Assert.ThrowsException<ArgumentException>(
+                () => Requires.NotNullOrWhitespace(" ", "string")).ParamName;
+            Assert.AreEqual("string", paramName);
+        }
+
         [TestMethod]
         public void NotNullItems()
         {

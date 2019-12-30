@@ -4,9 +4,9 @@ using Microsoft.CodeAnalysis.Operations;
 namespace Core.Extensions.Analyzers.NullCheck
 {
     /// <summary>
-    /// !string.IsNullOrEmpty(a)
+    /// !string.IsNullOrEmpty(a) or !string.IsNullOrWhitespace(a)
     /// </summary>
-    public class IsNotNullOrEmptyStringOperationVisitor : OperationVisitor, IParameterMatchingOperationVisitor
+    public class StringNullCheckOperationVisitor : OperationVisitor, IParameterMatchingOperationVisitor
     {
         public IParameterSymbol? MatchedNullableParameter { get; private set; }
 
@@ -20,17 +20,25 @@ namespace Core.Extensions.Analyzers.NullCheck
 
         public override void VisitInvocation(IInvocationOperation operation)
         {
-            var visitor = new StringIsNullOrEmptyMethodVisitor();
-            visitor.Visit(operation.TargetMethod);
-            if (!visitor.Matched)
-            {
-                return;
-            }
             if (operation.Arguments.IsEmpty)
             {
                 return;
             }
-            Visit(operation.Arguments[0]);
+
+            var visitors = new IMethodMatchingVisitor[]
+            {
+                 new StringIsNullOrEmptyMethodVisitor(),
+                 new StringIsNullOrWhitespaceMethodVisitor()
+            };
+            foreach (var visitor in visitors)
+            {
+                visitor.Visit(operation.TargetMethod);
+                if (visitor.Matched)
+                {
+                    Visit(operation.Arguments[0]);
+                    return;
+                }
+            }
         }
 
         public override void VisitArgument(IArgumentOperation operation)

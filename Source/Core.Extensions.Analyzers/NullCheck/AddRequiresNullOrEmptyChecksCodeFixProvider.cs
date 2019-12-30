@@ -13,7 +13,7 @@ namespace Core.Extensions.Analyzers.NullCheck
 
         public override string AddNullChecksTitle { get; } = Strings.AddRequiresNullOrEmptyChecksTitle;
 
-        public override bool FilterDiagnostic(NullableParameter parameter)
+        public override bool ShouldRegisterCodeFix(NullableParameter parameter)
         {
             return parameter.Symbol.Type.Kind == SymbolKind.ArrayType
                 || parameter.Symbol.Type.SpecialType == SpecialType.System_String;

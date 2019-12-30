@@ -28,6 +28,11 @@ namespace Core.Extensions.Analyzers.NullCheck
             }
         }
 
+        public override void VisitConversion(IConversionOperation operation)
+        {
+            Visit(operation.Operand);
+        }
+
         public override void VisitParameterReference(IParameterReferenceOperation operation)
         {
             var visitor = new NullableParameterVisitor();

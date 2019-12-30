@@ -38,7 +38,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             var visitors = new IParameterMatchingOperationVisitor[]
             {
                 new IsNotNullOperationVisitor(),
-                new IsNotNullOrEmptyStringOperationVisitor(),
+                new StringNullCheckOperationVisitor(),
                 new NotEqualToNullOperationVisitor()
             };
             foreach (var visitor in visitors)

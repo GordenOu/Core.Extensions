@@ -20,5 +20,13 @@ namespace Core.Extensions.Analyzers.Resources
         public const string AddDebugNullOrEmptyCheckTitle = "Add null or empty check (System.Diagnostics)";
 
         public const string AddDebugNullOrEmptyChecksTitle = "Add null or empty checks (System.Diagnostics)";
+
+        public const string AddRequiresNullOrWhitespaceCheckTitle = "Add null or whitespace check (Core.Diagnostics)";
+
+        public const string AddRequiresNullOrWhitespaceChecksTitle = "Add null or whitespace checks (Core.Diagnostics)";
+
+        public const string AddDebugNullOrWhitespaceCheckTitle = "Add null or whitespace check (System.Diagnostics)";
+
+        public const string AddDebugNullOrWhitespaceChecksTitle = "Add null or whitespace checks (System.Diagnostics)";
     }
 }

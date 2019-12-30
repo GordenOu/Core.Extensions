@@ -21,6 +21,7 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             if (symbol.Name == "NotNull"
                 || symbol.Name == "NotNullOrEmpty"
+                || symbol.Name == "NotNullOrWhitespace"
                 || symbol.Name == "NotNullPtr")
             {
                 Visit(symbol.ContainingType);

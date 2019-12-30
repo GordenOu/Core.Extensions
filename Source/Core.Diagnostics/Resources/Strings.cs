@@ -8,6 +8,8 @@ namespace Core.Diagnostics.Resources
 
         public static string NonEmptyString => GetString(nameof(NonEmptyString));
 
+        public static string NonWhitespaceString => GetString(nameof(NonWhitespaceString));
+
         public static string NonNullItems => GetString(nameof(NonNullItems));
 
         public static string Positive => GetString(nameof(Positive));
