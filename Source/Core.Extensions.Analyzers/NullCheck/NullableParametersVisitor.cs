@@ -17,6 +17,7 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             this.model = model;
             this.token = token;
+            NullableParameters = ImmutableArray<NullableParameter>.Empty;
         }
 
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)

@@ -29,6 +29,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             this.model = model;
             this.nullableParameters = nullableParameters;
             this.token = token;
+            existingNullChecks = ImmutableArray<ExistingNullCheck>.Empty;
         }
 
         public override SyntaxNode? VisitMethodDeclaration(MethodDeclarationSyntax node)

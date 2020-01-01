@@ -54,8 +54,10 @@ namespace Core.Extensions.Analyzers.NullCheck
 
         public ExistingNullChecksVisitor(SemanticModel model, CancellationToken token)
         {
+            parameters = ImmutableArray<IParameterSymbol>.Empty;
             this.model = model;
             this.token = token;
+            ExistingNullChecks = ImmutableArray<ExistingNullCheck>.Empty;
         }
 
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
