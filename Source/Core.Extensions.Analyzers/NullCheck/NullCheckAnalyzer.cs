@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -13,18 +12,18 @@ namespace Core.Extensions.Analyzers.NullCheck
     {
         public const string Id = nameof(NullCheck);
 
-        private static readonly string title = Strings.AddRequiresNullCheckTitle;
-        private static readonly string message = Strings.MissingNullCheckMessage;
+        private static readonly string title = Strings.NullCheckTitle;
+        private static readonly string message = Strings.NullCheckMessage;
         private static readonly string category = typeof(NullCheckAnalyzer).Namespace;
 
         public static DiagnosticDescriptor Descriptor { get; }
             = new DiagnosticDescriptor(
-            id: Id,
-            title: title,
-            messageFormat: message,
-            category: category,
-            defaultSeverity: DiagnosticSeverity.Hidden,
-            isEnabledByDefault: true);
+                id: Id,
+                title: title,
+                messageFormat: message,
+                category: category,
+                defaultSeverity: DiagnosticSeverity.Hidden,
+                isEnabledByDefault: true);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
             = ImmutableArray.Create(Descriptor);

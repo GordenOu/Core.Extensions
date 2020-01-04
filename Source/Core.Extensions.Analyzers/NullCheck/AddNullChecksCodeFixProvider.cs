@@ -131,13 +131,13 @@ namespace Core.Extensions.Analyzers.NullCheck
                 // Add null check.
                 {
                     var codeAction = CodeAction.Create(
-                    AddNullCheckTitle,
-                    token =>
-                    {
-                        var newDocument = FixDiagnostic(document, nullableParameter, root, model, node, token);
-                        return Task.FromResult(newDocument);
-                    },
-                    equivalenceKey: AddNullCheckTitle);
+                        AddNullCheckTitle,
+                        token =>
+                        {
+                            var newDocument = FixDiagnostic(document, nullableParameter, root, model, node, token);
+                            return Task.FromResult(newDocument);
+                        },
+                        equivalenceKey: AddNullCheckTitle);
                     context.RegisterCodeFix(codeAction, diagnostic);
                 }
 

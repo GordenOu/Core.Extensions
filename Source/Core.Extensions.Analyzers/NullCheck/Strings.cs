@@ -1,9 +1,10 @@
-namespace Core.Extensions.Analyzers.Resources
+namespace Core.Extensions.Analyzers.NullCheck
 {
-    public static class Strings
+    public class Strings
     {
+        public const string NullCheckTitle = "Missing null check on nullable type";
 
-        public const string MissingNullCheckMessage = "Missing null check on nullable type.";
+        public const string NullCheckMessage = "Missing null check on nullable type.";
 
         public const string AddRequiresNullCheckTitle = "Add null check (Core.Diagnostics)";
 

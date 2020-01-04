@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Core.Extensions.Analyzers.NullCheck;
-using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

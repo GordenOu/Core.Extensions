@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Threading;
-using Core.Extensions.Analyzers.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 
