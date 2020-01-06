@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference
+        Include="Microsoft.CodeAnalysis"
+        Version="3.4.0" />
+    <PackageReference
+        Include="Microsoft.NET.Test.Sdk"
+        Version="16.4.0" />
+    <PackageReference
+        Include="MSTest.TestAdapter"
+        Version="2.0.0" />
+    <PackageReference
+        Include="MSTest.TestFramework"
+        Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Core.Extensions/Core.Diagnostics/Core.Diagnostics.csproj" />
+    <ProjectReference Include="../../Core.Extensions.Analyzers/Core.Extensions.Analyzers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Core.Extensions.Analyzers/Core.Extensions.Analyzers.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Analyzer</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>
