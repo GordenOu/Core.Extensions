@@ -104,7 +104,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                 }
                 var node = root.FindNode(diagnostic.Location.SourceSpan)
                     .Ancestors()
-                    .OfType<MethodDeclarationSyntax>()
+                    .Where(node => node is ConstructorDeclarationSyntax || node is MethodDeclarationSyntax)
                     .FirstOrDefault();
                 if (node is null)
                 {

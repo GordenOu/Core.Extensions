@@ -60,7 +60,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             ExistingNullChecks = ImmutableArray<ExistingNullCheck>.Empty;
         }
 
-        public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
+        private void VisitBaseMethodDeclaration(BaseMethodDeclarationSyntax node)
         {
             if (node.Body is null)
             {
@@ -72,6 +72,16 @@ namespace Core.Extensions.Analyzers.NullCheck
                 return;
             }
             VisitBlock(node.Body);
+        }
+
+        public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+        }
+
+        public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
         }
 
         public override void VisitParameterList(ParameterListSyntax node)

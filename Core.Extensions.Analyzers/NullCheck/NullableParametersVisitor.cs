@@ -20,6 +20,11 @@ namespace Core.Extensions.Analyzers.NullCheck
             NullableParameters = ImmutableArray<NullableParameter>.Empty;
         }
 
+        public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+        {
+            Visit(node.ParameterList);
+        }
+
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             Visit(node.ParameterList);

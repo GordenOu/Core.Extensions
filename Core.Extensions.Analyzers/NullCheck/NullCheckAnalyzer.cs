@@ -78,7 +78,10 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.RegisterSyntaxNodeAction(AnalyzeSyntax, SyntaxKind.MethodDeclaration);
+            context.RegisterSyntaxNodeAction(
+                AnalyzeSyntax,
+                SyntaxKind.ConstructorDeclaration,
+                SyntaxKind.MethodDeclaration);
         }
     }
 }

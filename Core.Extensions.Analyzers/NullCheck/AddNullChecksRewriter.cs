@@ -32,11 +32,22 @@ namespace Core.Extensions.Analyzers.NullCheck
             existingNullChecks = ImmutableArray<ExistingNullCheck>.Empty;
         }
 
-        public override SyntaxNode? VisitMethodDeclaration(MethodDeclarationSyntax node)
+        private void VisitBaseMethodDeclaration(BaseMethodDeclarationSyntax node)
         {
             var existingNullChecksVisitor = new ExistingNullChecksVisitor(model, token);
             existingNullChecksVisitor.Visit(node);
             existingNullChecks = existingNullChecksVisitor.ExistingNullChecks;
+        }
+
+        public override SyntaxNode? VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+            return base.VisitConstructorDeclaration(node);
+        }
+
+        public override SyntaxNode? VisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
             return base.VisitMethodDeclaration(node);
         }
 
