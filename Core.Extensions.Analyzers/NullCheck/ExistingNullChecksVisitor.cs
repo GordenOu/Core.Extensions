@@ -50,7 +50,7 @@ namespace Core.Extensions.Analyzers.NullCheck
 
         private ImmutableArray<IParameterSymbol> parameters;
         private readonly SemanticModel model;
-        private CancellationToken token;
+        private readonly CancellationToken token;
 
         public ExistingNullChecksVisitor(SemanticModel model, CancellationToken token)
         {
@@ -79,9 +79,33 @@ namespace Core.Extensions.Analyzers.NullCheck
             VisitBaseMethodDeclaration(node);
         }
 
+        public override void VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+        }
+
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             VisitBaseMethodDeclaration(node);
+        }
+
+        public override void VisitOperatorDeclaration(OperatorDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+        }
+
+        public override void VisitLocalFunctionStatement(LocalFunctionStatementSyntax node)
+        {
+            if (node.Body is null)
+            {
+                return;
+            }
+            VisitParameterList(node.ParameterList);
+            if (parameters.IsEmpty)
+            {
+                return;
+            }
+            VisitBlock(node.Body);
         }
 
         public override void VisitParameterList(ParameterListSyntax node)
@@ -90,7 +114,10 @@ namespace Core.Extensions.Analyzers.NullCheck
             foreach (var parameter in node.Parameters)
             {
                 var symbol = model.GetDeclaredSymbol(parameter, token);
-                builder.Add(symbol);
+                if (symbol is not null)
+                {
+                    builder.Add(symbol);
+                }
             }
             parameters = builder.ToImmutable();
         }

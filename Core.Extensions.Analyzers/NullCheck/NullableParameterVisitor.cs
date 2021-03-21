@@ -33,5 +33,13 @@ namespace Core.Extensions.Analyzers.NullCheck
         {
             IsNullableParameter = true;
         }
+
+        public override void VisitTypeParameter(ITypeParameterSymbol symbol)
+        {
+            if (symbol.HasReferenceTypeConstraint)
+            {
+                IsNullableParameter = true;
+            }
+        }
     }
 }

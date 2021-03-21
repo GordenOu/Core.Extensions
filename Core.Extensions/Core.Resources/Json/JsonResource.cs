@@ -11,7 +11,7 @@ namespace Core.Resources.Json
     /// <typeparam name="T">The strongly typed class representing the resource.</typeparam>
     public class JsonResource<T>
     {
-        private static readonly JsonResourceManager resourceManager = new JsonResourceManager(typeof(T));
+        private static readonly JsonResourceManager resourceManager = new(typeof(T));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringResource{T}"/> class.
@@ -37,7 +37,7 @@ namespace Core.Resources.Json
             }
 
             var value = resourceManager.GetObject(name);
-            if (value != null)
+            if (value is not null)
             {
                 var element = (JsonElement)value;
                 if (element.ValueKind == JsonValueKind.String)
@@ -82,7 +82,7 @@ namespace Core.Resources.Json
             }
 
             var value = resourceManager.GetObject(name, culture);
-            if (value != null)
+            if (value is not null)
             {
                 var element = (JsonElement)value;
                 if (element.ValueKind == JsonValueKind.String)
@@ -116,7 +116,7 @@ namespace Core.Resources.Json
             }
 
             var value = resourceManager.GetObject(name);
-            if (value != null)
+            if (value is not null)
             {
                 return (JsonElement)value;
             }
@@ -146,7 +146,7 @@ namespace Core.Resources.Json
             }
 
             var value = resourceManager.GetObject(name, culture);
-            if (value != null)
+            if (value is not null)
             {
                 return (JsonElement)value;
             }

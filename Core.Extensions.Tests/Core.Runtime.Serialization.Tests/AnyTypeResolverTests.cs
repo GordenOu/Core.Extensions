@@ -27,7 +27,7 @@ namespace Core.Runtime.Serialization.Tests
     [TestClass]
     public class AnyTypeResolverTests
     {
-        private string Serialize<T>(T obj)
+        private static string Serialize<T>(T obj)
         {
             var serializer = new DataContractSerializer(
                 typeof(T),
@@ -45,7 +45,7 @@ namespace Core.Runtime.Serialization.Tests
             return output.ToString();
         }
 
-        private T Deserialize<T>(string xml)
+        private static T Deserialize<T>(string xml)
         {
             var serializer = new DataContractSerializer(
                 typeof(T),
@@ -54,10 +54,8 @@ namespace Core.Runtime.Serialization.Tests
                     DataContractResolver = new AnyTypeResolver(),
                     SerializeReadOnlyTypes = true
                 });
-            using (var reader = XmlReader.Create(new StringReader(xml)))
-            {
-                return (T)serializer.ReadObject(reader);
-            }
+            using var reader = XmlReader.Create(new StringReader(xml));
+            return (T)serializer.ReadObject(reader);
         }
 
         [TestMethod]

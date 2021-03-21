@@ -19,7 +19,7 @@ namespace Core.Linq
 
         private EqualityComparer(EqualityComparison<T> equalityComparison)
         {
-            Debug.Assert(equalityComparison != null);
+            Debug.Assert(equalityComparison is not null);
 
             this.equalityComparison = equalityComparison;
         }

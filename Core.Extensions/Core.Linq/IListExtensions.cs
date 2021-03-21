@@ -62,7 +62,7 @@ namespace Core.Linq
         {
             Requires.NotNull(list, nameof(list));
 
-            random = random ?? new Random();
+            random ??= new Random();
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 int j = random.Next(i + 1);

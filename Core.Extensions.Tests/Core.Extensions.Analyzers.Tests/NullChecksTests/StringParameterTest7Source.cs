@@ -26,18 +26,18 @@ namespace Core.Extensions.Analyzers.Tests.NullChecksTests
             byte* p3)
         {
             Requires.NotNull(o1, nameof(o1));
-            Debug.Assert(!(o2 is null));
+            Debug.Assert(o2 is not null);
             Requires.NotNull(s1, nameof(s1));
-            Debug.Assert(!(s2 is null));
+            Debug.Assert(s2 is not null);
             Requires.NotNullOrEmpty(s3, nameof(s3));
             Debug.Assert(!string.IsNullOrEmpty(s4));
             Requires.NotNullOrWhitespace(s5, nameof(s5));
             Debug.Assert(!string.IsNullOrWhiteSpace(s6));
             Requires.NotNull(d1, nameof(d1));
-            Debug.Assert(!(d2 is null));
+            Debug.Assert(d2 is not null);
             Requires.NotNullOrEmpty(d3, nameof(d3));
             Requires.NotNullPtr(p1, nameof(p1));
-            Debug.Assert(!(p2 is null));
+            Debug.Assert(p2 is not null);
 
         }
     }

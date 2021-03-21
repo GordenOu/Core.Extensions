@@ -66,8 +66,8 @@ namespace Core.Runtime.Serialization
             Type declaredType,
             DataContractResolver knownTypeResolver)
         {
-            typeName = typeName ?? string.Empty;
-            typeNamespace = typeNamespace ?? string.Empty;
+            typeName ??= string.Empty;
+            typeNamespace ??= string.Empty;
             typeName = XmlConvert.DecodeName(typeName);
             typeNamespace = XmlConvert.DecodeName(typeNamespace);
 

@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <EmbedAllSources>true</EmbedAllSources>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference
-        Include="System.Text.Json"
-        Version="4.7.0" />
-  </ItemGroup>
+  <PropertyGroup Condition="$(Configuration)==Release">
+    <EmbedAllSources>true</EmbedAllSources>
+    <PathMap>$(MSBuildProjectDirectory)=$(MSBuildProjectName)</PathMap>
+  </PropertyGroup>
 
 </Project>

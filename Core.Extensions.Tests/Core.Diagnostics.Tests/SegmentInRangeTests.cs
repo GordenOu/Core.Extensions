@@ -9,7 +9,7 @@ namespace Core.Diagnostics.Tests
         [TestMethod]
         public void ObjectArray()
         {
-            Requires.SegmentInRange(new object[0], 0, 0);
+            Requires.SegmentInRange(Array.Empty<object>(), 0, 0);
             Requires.SegmentInRange(new object[5], 2, 3);
 
             Assert.ThrowsException<ArgumentNullException>(

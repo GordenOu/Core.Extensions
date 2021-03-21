@@ -2,10 +2,14 @@ using Microsoft.CodeAnalysis.Operations;
 
 namespace Core.Extensions.Analyzers.NullCheck
 {
-    public class IsNullPatternVisitor : OperationVisitor
+    public class NotNullPatternVisitor : OperationVisitor
     {
-
         public bool Matched { get; private set; } = false;
+
+        public override void VisitNegatedPattern(INegatedPatternOperation operation)
+        {
+            Visit(operation.Pattern);
+        }
 
         public override void VisitConstantPattern(IConstantPatternOperation operation)
         {

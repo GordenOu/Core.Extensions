@@ -26,7 +26,7 @@ namespace Core.Linq.Tests
         {
             int[] first = null;
             int[] second = null;
-            bool equalityComparison(int x, int y) => x == y;
+            static bool equalityComparison(int x, int y) => x == y;
             Assert.ThrowsException<ArgumentNullException>(
                 () => first.SequenceEqual(new[] { 1, 2, 3 }, equalityComparison));
             first = new[] { 1, 2, 3 };

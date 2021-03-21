@@ -62,7 +62,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             var parameterIndexes = new List<int>();
             foreach (var diagnostic in diagnostics)
             {
-                if (diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
+                if (diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string? index)
                     && int.TryParse(index, out int parameterIndex))
                 {
                     parameterIndexes.Add(parameterIndex);
@@ -104,13 +104,13 @@ namespace Core.Extensions.Analyzers.NullCheck
                 }
                 var node = root.FindNode(diagnostic.Location.SourceSpan)
                     .Ancestors()
-                    .Where(node => node is ConstructorDeclarationSyntax || node is MethodDeclarationSyntax)
+                    .Where(node => node is BaseMethodDeclarationSyntax or LocalFunctionStatementSyntax)
                     .FirstOrDefault();
                 if (node is null)
                 {
                     continue;
                 }
-                if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string index)
+                if (!diagnostic.Properties.TryGetValue(nameof(NullableParameter.Index), out string? index)
                     || !int.TryParse(index, out int parameterIndex))
                 {
                     continue;

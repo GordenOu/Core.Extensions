@@ -30,6 +30,11 @@ namespace Core.Extensions.Analyzers.NullCheck
             Visit(node.ParameterList);
         }
 
+        public override void VisitLocalFunctionStatement(LocalFunctionStatementSyntax node)
+        {
+            Visit(node.ParameterList);
+        }
+
         public override void VisitParameterList(ParameterListSyntax node)
         {
             var parameters = node.Parameters;

@@ -17,6 +17,7 @@ namespace Core.Linq.Tests
         public void Dispose()
         {
             DisposeAction?.Invoke();
+            GC.SuppressFinalize(this);
         }
     }
 

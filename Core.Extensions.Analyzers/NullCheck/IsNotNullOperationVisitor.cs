@@ -4,23 +4,15 @@ using Microsoft.CodeAnalysis.Operations;
 namespace Core.Extensions.Analyzers.NullCheck
 {
     /// <summary>
-    /// !(a is null)
+    /// a is not null
     /// </summary>
     public class IsNotNullOperationVisitor : OperationVisitor, IParameterMatchingOperationVisitor
     {
         public IParameterSymbol? MatchedNullableParameter { get; private set; }
 
-        public override void VisitUnaryOperator(IUnaryOperation operation)
-        {
-            if (operation.OperatorKind == UnaryOperatorKind.Not)
-            {
-                Visit(operation.Operand);
-            }
-        }
-
         public override void VisitIsPattern(IIsPatternOperation operation)
         {
-            var visitor = new IsNullPatternVisitor();
+            var visitor = new NotNullPatternVisitor();
             visitor.Visit(operation.Pattern);
             if (visitor.Matched)
             {

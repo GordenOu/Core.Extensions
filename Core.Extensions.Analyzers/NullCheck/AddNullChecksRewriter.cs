@@ -32,7 +32,7 @@ namespace Core.Extensions.Analyzers.NullCheck
             existingNullChecks = ImmutableArray<ExistingNullCheck>.Empty;
         }
 
-        private void VisitBaseMethodDeclaration(BaseMethodDeclarationSyntax node)
+        private void VisitBaseMethodDeclaration(CSharpSyntaxNode node)
         {
             var existingNullChecksVisitor = new ExistingNullChecksVisitor(model, token);
             existingNullChecksVisitor.Visit(node);
@@ -45,10 +45,28 @@ namespace Core.Extensions.Analyzers.NullCheck
             return base.VisitConstructorDeclaration(node);
         }
 
+        public override SyntaxNode? VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+            return base.VisitConversionOperatorDeclaration(node);
+        }
+
         public override SyntaxNode? VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
             VisitBaseMethodDeclaration(node);
             return base.VisitMethodDeclaration(node);
+        }
+
+        public override SyntaxNode? VisitOperatorDeclaration(OperatorDeclarationSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+            return base.VisitOperatorDeclaration(node);
+        }
+
+        public override SyntaxNode? VisitLocalFunctionStatement(LocalFunctionStatementSyntax node)
+        {
+            VisitBaseMethodDeclaration(node);
+            return base.VisitLocalFunctionStatement(node);
         }
 
         public abstract ExpressionStatementSyntax GenerateNullCheckStatement(

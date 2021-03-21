@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Core.Extensions.Analyzers.NullCheck
 {
@@ -32,12 +33,12 @@ namespace Core.Extensions.Analyzers.NullCheck
                         generator.MemberAccessExpression(
                             generator.TypeExpression(SpecialType.System_String),
                             generator.IdentifierName(nameof(string.IsNullOrEmpty))),
-                        new[] { SyntaxFactory.IdentifierName(parameterName) })),
-                _ => generator.LogicalNotExpression(
-                    SyntaxFactory.IsPatternExpression(
-                        SyntaxFactory.IdentifierName(parameterName),
-                        SyntaxFactory.ConstantPattern(
-                            SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression))))
+                        new[] { IdentifierName(parameterName) })),
+                _ => IsPatternExpression(
+                    IdentifierName(parameterName),
+                    UnaryPattern(
+                        ConstantPattern(
+                            LiteralExpression(SyntaxKind.NullLiteralExpression))))
             };
             var nullCheckStatement = generator.ExpressionStatement(
                 generator.InvocationExpression(
@@ -45,7 +46,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                         generator.IdentifierName(nameof(Debug)),
                         generator.IdentifierName(nameof(Debug.Assert))),
                     new[] { assertExpression }))
-                .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
+                .WithTrailingTrivia(EndOfLine(Environment.NewLine));
             return (ExpressionStatementSyntax)nullCheckStatement;
         }
     }

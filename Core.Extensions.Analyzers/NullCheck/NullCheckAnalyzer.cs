@@ -14,7 +14,7 @@ namespace Core.Extensions.Analyzers.NullCheck
 
         private static readonly string title = Strings.NullCheckTitle;
         private static readonly string message = Strings.NullCheckMessage;
-        private static readonly string category = typeof(NullCheckAnalyzer).Namespace;
+        private static readonly string category = typeof(NullCheckAnalyzer).Namespace!;
 
         public static DiagnosticDescriptor Descriptor { get; }
             = new DiagnosticDescriptor(
@@ -49,7 +49,7 @@ namespace Core.Extensions.Analyzers.NullCheck
                     var diagnostic = Diagnostic.Create(
                         Descriptor,
                         nullableParameter.Syntax.Identifier.GetLocation(),
-                        properties: ImmutableDictionary<string, string>.Empty.Add(
+                        properties: ImmutableDictionary<string, string?>.Empty.Add(
                             nameof(NullableParameter.Index),
                             nullableParameter.Index.ToString()));
                     builder.Add(diagnostic);
@@ -81,7 +81,10 @@ namespace Core.Extensions.Analyzers.NullCheck
             context.RegisterSyntaxNodeAction(
                 AnalyzeSyntax,
                 SyntaxKind.ConstructorDeclaration,
-                SyntaxKind.MethodDeclaration);
+                SyntaxKind.ConversionOperatorDeclaration,
+                SyntaxKind.MethodDeclaration,
+                SyntaxKind.OperatorDeclaration,
+                SyntaxKind.LocalFunctionStatement);
         }
     }
 }

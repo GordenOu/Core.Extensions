@@ -6,7 +6,7 @@ namespace Core.Extensions.Analyzers.Tests.NullCheckTests
     {
         public void Test(string a)
         {
-            Debug.Assert(!(a is null));
+            Debug.Assert(a is not null);
 
         }
     }

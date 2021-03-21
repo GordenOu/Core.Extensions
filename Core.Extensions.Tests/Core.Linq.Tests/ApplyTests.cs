@@ -26,7 +26,7 @@ namespace Core.Linq.Tests
             return value + 1;
         }
 
-        private T GenericTestAction<T>(int value)
+        private static T GenericTestAction<T>(int value)
         {
             return default;
         }

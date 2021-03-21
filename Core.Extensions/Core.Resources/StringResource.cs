@@ -12,7 +12,7 @@ namespace Core.Resources
     public abstract class StringResource<T>
         where T : StringResource<T>
     {
-        private static readonly ResourceManager resourceManager = new ResourceManager(typeof(T));
+        private static readonly ResourceManager resourceManager = new(typeof(T));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringResource{T}"/> class.

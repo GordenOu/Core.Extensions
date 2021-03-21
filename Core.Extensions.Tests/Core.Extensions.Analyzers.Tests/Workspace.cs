@@ -9,7 +9,7 @@ namespace Core.Extensions.Analyzers.Tests
 {
     public static class Workspace
     {
-        private static readonly AdhocWorkspace currentWorkspace = new AdhocWorkspace();
+        private static readonly AdhocWorkspace currentWorkspace = new();
 
         public static Project GetCurrentProject()
         {

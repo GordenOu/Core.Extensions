@@ -69,7 +69,7 @@ namespace Core.Diagnostics.Tests
         public void NotNullItems()
         {
             Requires.NotNullItems(new[] { new object() }, string.Empty);
-            Requires.NotNullItems(new object[0], string.Empty);
+            Requires.NotNullItems(Array.Empty<object>(), string.Empty);
 
             string paramName = Assert.ThrowsException<ArgumentNullException>(
                 () => Requires.NotNullItems<object>(null, string.Empty)).ParamName;

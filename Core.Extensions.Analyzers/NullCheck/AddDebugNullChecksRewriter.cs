@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Core.Extensions.Analyzers.NullCheck
 {
@@ -32,13 +33,13 @@ namespace Core.Extensions.Analyzers.NullCheck
                         generator.IdentifierName(nameof(Debug.Assert))),
                     new[]
                     {
-                        generator.LogicalNotExpression(
-                            SyntaxFactory.IsPatternExpression(
-                                SyntaxFactory.IdentifierName(parameterName),
-                                SyntaxFactory.ConstantPattern(
-                                    SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression))))
+                        IsPatternExpression(
+                            IdentifierName(parameterName),
+                            UnaryPattern(
+                                ConstantPattern(
+                                    LiteralExpression(SyntaxKind.NullLiteralExpression))))
                     }))
-                .WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
+                .WithTrailingTrivia(EndOfLine(Environment.NewLine));
             return (ExpressionStatementSyntax)nullCheckStatement;
         }
     }
