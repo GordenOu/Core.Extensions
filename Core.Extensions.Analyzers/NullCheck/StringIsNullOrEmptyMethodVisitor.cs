@@ -1,33 +1,32 @@
 using Microsoft.CodeAnalysis;
 
-namespace Core.Extensions.Analyzers.NullCheck
+namespace Core.Extensions.Analyzers.NullCheck;
+
+public class StringIsNullOrEmptyMethodVisitor : SymbolVisitor, IMethodMatchingVisitor
 {
-    public class StringIsNullOrEmptyMethodVisitor : SymbolVisitor, IMethodMatchingVisitor
+    public bool Matched { get; private set; } = false;
+
+    public override void VisitMethod(IMethodSymbol symbol)
     {
-        public bool Matched { get; private set; } = false;
-
-        public override void VisitMethod(IMethodSymbol symbol)
+        if (symbol.Name == nameof(string.IsNullOrEmpty))
         {
-            if (symbol.Name == nameof(string.IsNullOrEmpty))
-            {
-                Visit(symbol.ContainingType);
-            }
+            Visit(symbol.ContainingType);
         }
+    }
 
-        public override void VisitNamedType(INamedTypeSymbol symbol)
+    public override void VisitNamedType(INamedTypeSymbol symbol)
+    {
+        if (symbol.SpecialType == SpecialType.System_String)
         {
-            if (symbol.SpecialType == SpecialType.System_String)
-            {
-                Visit(symbol.ContainingNamespace);
-            }
+            Visit(symbol.ContainingNamespace);
         }
+    }
 
-        public override void VisitNamespace(INamespaceSymbol symbol)
+    public override void VisitNamespace(INamespaceSymbol symbol)
+    {
+        if (symbol.ToDisplayString() == nameof(System))
         {
-            if (symbol.ToDisplayString() == nameof(System))
-            {
-                Matched = true;
-            }
+            Matched = true;
         }
     }
 }

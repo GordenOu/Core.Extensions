@@ -1,30 +1,29 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace Core.Extensions.Analyzers.NullCheck
+namespace Core.Extensions.Analyzers.NullCheck;
+
+public class NullableParameterArgumentVisitor : OperationVisitor
 {
-    public class NullableParameterArgumentVisitor : OperationVisitor
+    public IParameterSymbol? MatchedNullableParameter { get; private set; }
+
+    public override void VisitArgument(IArgumentOperation operation)
     {
-        public IParameterSymbol? MatchedNullableParameter { get; private set; }
+        Visit(operation.Value);
+    }
 
-        public override void VisitArgument(IArgumentOperation operation)
-        {
-            Visit(operation.Value);
-        }
+    public override void VisitConversion(IConversionOperation operation)
+    {
+        Visit(operation.Operand);
+    }
 
-        public override void VisitConversion(IConversionOperation operation)
+    public override void VisitParameterReference(IParameterReferenceOperation operation)
+    {
+        var visitor = new NullableParameterVisitor();
+        visitor.Visit(operation.Parameter);
+        if (visitor.IsNullableParameter)
         {
-            Visit(operation.Operand);
-        }
-
-        public override void VisitParameterReference(IParameterReferenceOperation operation)
-        {
-            var visitor = new NullableParameterVisitor();
-            visitor.Visit(operation.Parameter);
-            if (visitor.IsNullableParameter)
-            {
-                MatchedNullableParameter = operation.Parameter;
-            }
+            MatchedNullableParameter = operation.Parameter;
         }
     }
 }

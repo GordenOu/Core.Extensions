@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Microsoft.DotNet.Cli.Utils;
 
-static string GetFilePath([CallerFilePath] string path = null)
+static string GetFilePath([CallerFilePath] string? path = null)
 {
+    if (path is null)
+    {
+        throw new InvalidOperationException(nameof(path));
+    }
     return path;
 }
 
 string filePath = GetFilePath();
-string rootPath = new FileInfo(filePath).Directory.Parent.Parent.FullName;
+string? rootPath = new FileInfo(filePath).Directory?.Parent?.Parent?.FullName;
+if (rootPath is null)
+{
+    throw new InvalidOperationException(nameof(rootPath));
+}
 var testProjectFiles = new DirectoryInfo(Path.Combine(rootPath, "Core.Extensions.Tests"))
    .EnumerateDirectories("Core.*.Tests", SearchOption.TopDirectoryOnly)
    .Select(directory => directory.EnumerateFiles("*.csproj").Single());

@@ -1,24 +1,22 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Core.Diagnostics;
 
-namespace Core.Reflection
+namespace Core.Reflection;
+
+/// <summary>
+/// Provides methods that retrieve information about types at run time.
+/// </summary>
+public static class TypeExtensions
 {
     /// <summary>
-    /// Provides methods that retrieve information about types at run time.
+    /// Gets a default value of the specified type.
     /// </summary>
-    public static class TypeExtensions
+    /// <param name="type">The specified type.</param>
+    /// <returns>The default value of the specified type.</returns>
+    public static object? GetDefaultValue(this Type type)
     {
-        /// <summary>
-        /// Gets a default value of the specified type.
-        /// </summary>
-        /// <param name="type">The specified type.</param>
-        /// <returns>The default value of the specified type.</returns>
-        public static object GetDefaultValue(this Type type)
-        {
-            Requires.NotNull(type, nameof(type));
+        Requires.NotNull(type, nameof(type));
 
-            return type.GetTypeInfo().IsValueType ? Activator.CreateInstance(type) : null;
-        }
+        return type.GetTypeInfo().IsValueType ? Activator.CreateInstance(type) : null;
     }
 }

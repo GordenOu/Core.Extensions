@@ -1,3 +1,1 @@
-﻿using System;
-
-Console.WriteLine("Yo~");
+﻿Console.WriteLine("Yo~");

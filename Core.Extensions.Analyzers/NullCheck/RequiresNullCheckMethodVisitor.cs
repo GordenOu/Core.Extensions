@@ -2,67 +2,66 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace Core.Extensions.Analyzers.NullCheck
+namespace Core.Extensions.Analyzers.NullCheck;
+
+public class RequiresNullCheckMethodVisitor : SymbolVisitor, IParameterMatchingSymbolVisitor
 {
-    public class RequiresNullCheckMethodVisitor : SymbolVisitor, IParameterMatchingSymbolVisitor
+    private readonly ImmutableArray<IArgumentOperation> arguments;
+
+    public IParameterSymbol? MatchedNullableParameter { get; private set; }
+
+    private bool isNullCheckMethod = false;
+
+    public RequiresNullCheckMethodVisitor(ImmutableArray<IArgumentOperation> arguments)
     {
-        private ImmutableArray<IArgumentOperation> arguments;
+        this.arguments = arguments;
+    }
 
-        public IParameterSymbol? MatchedNullableParameter { get; private set; }
-
-        private bool isNullCheckMethod = false;
-
-        public RequiresNullCheckMethodVisitor(ImmutableArray<IArgumentOperation> arguments)
+    public override void VisitMethod(IMethodSymbol symbol)
+    {
+        if (symbol.Name == "NotNull"
+            || symbol.Name == "NotNullOrEmpty"
+            || symbol.Name == "NotNullOrWhitespace"
+            || symbol.Name == "NotNullPtr")
         {
-            this.arguments = arguments;
+            Visit(symbol.ContainingType);
+        }
+        if (!isNullCheckMethod)
+        {
+            return;
         }
 
-        public override void VisitMethod(IMethodSymbol symbol)
+        if (arguments.IsEmpty)
         {
-            if (symbol.Name == "NotNull"
-                || symbol.Name == "NotNullOrEmpty"
-                || symbol.Name == "NotNullOrWhitespace"
-                || symbol.Name == "NotNullPtr")
-            {
-                Visit(symbol.ContainingType);
-            }
-            if (!isNullCheckMethod)
-            {
-                return;
-            }
-
-            if (arguments.IsEmpty)
-            {
-                return;
-            }
-            var argument = arguments[0];
-            var visitor = new NullableParameterArgumentVisitor();
-            visitor.Visit(argument);
-            MatchedNullableParameter = visitor.MatchedNullableParameter;
+            return;
         }
+        var argument = arguments[0];
+        var visitor = new NullableParameterArgumentVisitor();
+        visitor.Visit(argument);
+        MatchedNullableParameter = visitor.MatchedNullableParameter;
+    }
 
-        public override void VisitNamedType(INamedTypeSymbol symbol)
+    public override void VisitNamedType(INamedTypeSymbol symbol)
+    {
+        if (symbol.Name == "Requires")
         {
-            if (symbol.Name == "Requires")
-            {
-                Visit(symbol.ContainingNamespace);
-            }
+            Visit(symbol.ContainingNamespace);
         }
+    }
 
-        public override void VisitNamespace(INamespaceSymbol symbol)
+    public override void VisitNamespace(INamespaceSymbol symbol)
+    {
+        if (symbol.ToDisplayString() == "Core.Diagnostics")
         {
-            if (symbol.ToDisplayString() == "Core.Diagnostics")
-            {
-                Visit(symbol.ContainingAssembly);
-            }
+            Visit(symbol.ContainingAssembly);
         }
+    }
 
-        public override void VisitAssembly(IAssemblySymbol symbol)
+    public override void VisitAssembly(IAssemblySymbol symbol)
+    {
+        if (symbol.Name == "Core.Diagnostics")
         {
-            if (symbol.Name == "Core.Diagnostics")
-            {
-                isNullCheckMethod = true;
-            }
+            isNullCheckMethod = true;
         }
     }
 }

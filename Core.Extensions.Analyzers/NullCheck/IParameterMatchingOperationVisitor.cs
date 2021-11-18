@@ -1,11 +1,10 @@
 using Microsoft.CodeAnalysis;
 
-namespace Core.Extensions.Analyzers.NullCheck
-{
-    public interface IParameterMatchingOperationVisitor
-    {
-        public IParameterSymbol? MatchedNullableParameter { get; }
+namespace Core.Extensions.Analyzers.NullCheck;
 
-        public void Visit(IOperation operation);
-    }
+public interface IParameterMatchingOperationVisitor
+{
+    public IParameterSymbol? MatchedNullableParameter { get; }
+
+    public void Visit(IOperation operation);
 }

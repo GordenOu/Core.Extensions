@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
+﻿using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using System.Xml;
 using Microsoft.DotNet.Cli.Utils;
 
-static string GetFilePath([CallerFilePath] string path = null)
+static string GetFilePath([CallerFilePath] string? path = null)
 {
+    if (path is null)
+    {
+        throw new InvalidOperationException(nameof(path));
+    }
     return path;
 }
 
@@ -27,7 +27,11 @@ static void Run(string commandName, params string[] args)
 }
 
 string filePath = GetFilePath();
-string rootPath = new FileInfo(filePath).Directory.Parent.Parent.FullName;
+string? rootPath = new FileInfo(filePath).Directory?.Parent?.Parent?.FullName;
+if (rootPath is null)
+{
+    throw new InvalidOperationException(nameof(rootPath));
+}
 string dummyProjectPath = Path.Combine(rootPath, "Automation", "Core.Extensions");
 string outputPath = Path.Combine(rootPath, "Publish");
 if (Directory.Exists(outputPath))
@@ -43,10 +47,14 @@ foreach (var path in Directory.EnumerateDirectories(Path.Combine(rootPath, "Core
     using var stream = File.OpenRead(projectFilePath);
     var document = new XmlDocument();
     document.Load(stream);
-    foreach (XmlNode node in document.SelectNodes("/Project/ItemGroup/PackageReference"))
+    foreach (XmlNode node in document.SelectNodes("/Project/ItemGroup/PackageReference")!)
     {
-        string packageName = node.Attributes["Include"].Value;
-        string version = node.Attributes["Version"].Value;
+        string? packageName = node.Attributes?["Include"]?.Value;
+        string? version = node.Attributes?["Version"]?.Value;
+        if (packageName is null || version is null)
+        {
+            throw new InvalidOperationException((nameof(packageName), nameof(version)).ToString());
+        }
         Run("dotnet", "add", Path.Combine(dummyProjectPath, "Core.Extensions.csproj"),
             "package", packageName,
             "--version", version);
@@ -126,8 +134,8 @@ Run("dotnet", "pack", dummyProjectPath,
     "-p:SymbolPackageFormat=snupkg",
     "--output", outputPath);
 string outputPackagePath = Directory.EnumerateFiles(outputPath)
-        .Where(path => path.EndsWith(".nupkg"))
-        .Single();
+    .Where(path => path.EndsWith(".nupkg"))
+    .Single();
 MergeEntries(outputPackagePath, packageEntries);
 string outputSymbolPackagePath = Directory.EnumerateFiles(outputPath)
     .Where(path => path.EndsWith(".snupkg"))

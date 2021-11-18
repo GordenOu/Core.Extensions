@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 WORKDIR /root/Core.Extensions/
 COPY ./ /root/Core.Extensions/
 RUN dotnet run --project ./Automation/Build/Build.csproj

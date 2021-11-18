@@ -1,11 +1,10 @@
 using Microsoft.CodeAnalysis;
 
-namespace Core.Extensions.Analyzers.NullCheck
-{
-    public interface IMethodMatchingVisitor
-    {
-        public bool Matched { get; }
+namespace Core.Extensions.Analyzers.NullCheck;
 
-        public void Visit(ISymbol operation);
-    }
+public interface IMethodMatchingVisitor
+{
+    public bool Matched { get; }
+
+    public void Visit(ISymbol operation);
 }

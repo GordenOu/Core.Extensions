@@ -29,7 +29,7 @@ namespace Core.Resources.Json
         /// <exception cref="InvalidOperationException">
         /// The resource is not of a string.
         /// </exception>
-        public static string GetString(string name)
+        public static string? GetString(string name)
         {
             if (name is null)
             {
@@ -70,7 +70,7 @@ namespace Core.Resources.Json
         /// <exception cref="InvalidOperationException">
         /// The resource is not of a string.
         /// </exception>
-        public static string GetString(string name, CultureInfo culture)
+        public static string? GetString(string name, CultureInfo culture)
         {
             if (name is null)
             {
